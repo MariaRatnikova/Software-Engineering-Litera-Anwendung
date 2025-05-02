@@ -1,106 +1,138 @@
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 /**
- * Controller-Klasse, die das ApplicationInterface implementiert
- * Dient als Vermittler zwischen der Benutzeroberfläche und dem Buchkatalog
+ * Steuerungsklasse für den Konsolen-Workflow des Bücherkatalogs.
  */
 public class Controller implements ApplicationInterface {
     private final Buchkatalog buchkatalog;
 
-    
-    /**
-     * Konstruktor für den Controller
-     * @param storageService Der StorageService für den Datenzugriff
-     */
-    public Controller(StorageService storageService) {
-
-        // Verwende die erweiterte Buchkatalog-Implementierung
+    public Controller() {
+        StorageService storageService = new StorageService();
         this.buchkatalog = new Buchkatalog(storageService);
     }
-    
-    /**
-     * Sucht nach Büchern mit dem angegebenen Titel
-     * @param titel Der zu suchende Titel
-     * @return Liste der gefundenen Bücher
-     */
+
     @Override
     public List<Buch> buchsuche(String titel) {
         return buchkatalog.buchsuche(titel);
     }
-    
-    /**
-     * Sucht nach Büchern eines bestimmten Autors
-     * @param autorName Der Name des Autors
-     * @return Liste der gefundenen Bücher
-     */
+
     @Override
     public List<Buch> sucheNachAutor(String autorName) {
         return buchkatalog.sucheNachAutor(autorName);
     }
-    
-    /**
-     * Sucht nach Büchern eines bestimmten Genres
-     * @param genreName Der Name des Genres
-     * @return Liste der gefundenen Bücher
-     */
+
     @Override
     public List<Buch> sucheNachGenre(String genreName) {
         return buchkatalog.sucheNachGenre(genreName);
     }
-    
-    /**
-     * Sucht nach Büchern eines bestimmten Verlags
-     * @param verlagName Der Name des Verlags
-     * @return Liste der gefundenen Bücher
-     */
+
     @Override
     public List<Buch> sucheNachVerlag(String verlagName) {
         return buchkatalog.sucheNachVerlag(verlagName);
     }
-    
-    /**
-     * Gibt die Details eines Buches anhand seiner ID zurück
-     * @param id Die ID des Buches
-     * @return Das gefundene Buch oder null, wenn kein Buch mit dieser ID existiert
-     */
+
     @Override
-    public Buch buchdetails(int id) {
-        return buchkatalog.buchDetails(id);
+    public Buch buchdetails(String bookId) {
+        return buchkatalog.buchDetails(bookId);
     }
-    
-    /**
-     * Gibt alle Rezensionen eines Buches zurück
-     * @param buchId Die ID des Buches
-     * @return Liste der Rezensionen
-     */
+
     @Override
-    public List<Rezension> showRezensionen(int buchId) {
-        return buchkatalog.showRezensionen(buchId);
+    public List<Rezension> showRezensionen(String bookId) {
+        return buchkatalog.showRezensionen(bookId);
     }
-    
-    /**
-     * Fügt eine Rezension zu einem Buch hinzu
-     * @param id Die ID des Buches
-     * @param r Die hinzuzufügende Rezension
-     */
+
     @Override
-    public void reviewHinzufuegen(int id, Rezension r) {
-        buchkatalog.reviewHinzufuegen(id, r);
+    public void reviewHinzufuegen(String bookId, Rezension rezension) {
+        buchkatalog.reviewHinzufuegen(bookId, rezension);
     }
-    
-    /**
-     * Gibt die Anzahl der Bücher im Katalog zurück
-     * @return Anzahl der Bücher
-     */
-    public int getBuecherAnzahl() {
-        return buchkatalog.getBuecherAnzahl();
+
+    public void runConsole() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("=== Willkommen im Bücherkatalog ===");
+
+        while (true) {
+            System.out.println("\nMenü:");
+            System.out.println("1: Titel suchen");
+            System.out.println("2: Autor suchen");
+            System.out.println("3: Genre suchen");
+            System.out.println("4: Verlag suchen");
+            System.out.println("5: Buch-Details");
+            System.out.println("6: Rezension hinzufügen");
+            System.out.println("7: Rezensionen anzeigen");
+            System.out.println("0: Beenden");
+            System.out.print("Auswahl: ");
+
+            String wahl = sc.nextLine().trim();
+            if ("0".equals(wahl)) break;
+
+            switch (wahl) {
+                case "1":
+                    System.out.print("Titel (Teilstring): ");
+                    for (Buch b : buchsuche(sc.nextLine())) {
+                        System.out.printf("%s: %s%n", b.getBookId(), b.getTitle());
+                    }
+                    break;
+                case "2":
+                    System.out.print("Autor (Teilstring): ");
+                    for (Buch b : sucheNachAutor(sc.nextLine())) {
+                        System.out.printf("%s: %s%n", b.getBookId(), b.getTitle());
+                    }
+                    break;
+                case "3":
+                    System.out.print("Genre (Teilstring): ");
+                    for (Buch b : sucheNachGenre(sc.nextLine())) {
+                        System.out.printf("%s: %s%n", b.getBookId(), b.getTitle());
+                    }
+                    break;
+                case "4":
+                    System.out.print("Verlag (Teilstring): ");
+                    for (Buch b : sucheNachVerlag(sc.nextLine())) {
+                        System.out.printf("%s: %s%n", b.getBookId(), b.getTitle());
+                    }
+                    break;
+                case "5":
+                    System.out.print("BookId für Details: ");
+                    String bid = sc.nextLine();
+                    Buch buch = buchdetails(bid);
+                    System.out.println(buch != null ? buch : "Buch nicht gefunden.");
+                    break;
+                case "6":
+                    System.out.print("BookId für Rezension: ");
+                    String rbid = sc.nextLine();
+                    if (buchdetails(rbid) != null) {
+                        System.out.print("Kommentar: ");
+                        String text = sc.nextLine();
+                        System.out.print("Bewertung (1–5): ");
+                        int rating = Integer.parseInt(sc.nextLine());
+                        Rezension rez = new Rezension();
+                        rez.setKommentar(text);
+                        rez.setBewertung(rating);
+                        rez.setDatum(new Date());
+                        reviewHinzufuegen(rbid, rez);
+                        System.out.println("Rezension gespeichert.");
+                    } else {
+                        System.out.println("Ungültige BookId.");
+                    }
+                    break;
+                case "7":
+                    System.out.print("BookId für Rezensionen: ");
+                    for (Rezension r : showRezensionen(sc.nextLine())) {
+                        System.out.printf("%d Sterne: %s (Datum: %s)%n",
+                            r.getBewertung(), r.getKommentar(), r.getDatum());
+                    }
+                    break;
+                default:
+                    System.out.println("Ungültige Auswahl.");
+            }
+        }
+
+        System.out.println("Programm beendet.");
+        sc.close();
     }
-    
-    /**
-     * Gibt alle Bücher im Katalog zurück
-     * @return Liste aller Bücher
-     */
-    public List<Buch> getAlleBuecher() {
-        return buchkatalog.getAlleBuecher();
+
+    public static void main(String[] args) {
+        new Controller().runConsole();
     }
 }

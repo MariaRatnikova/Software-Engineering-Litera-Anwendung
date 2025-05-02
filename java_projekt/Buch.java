@@ -1,51 +1,70 @@
-import java.util.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Modellklasse für Bücher, passend zum JSON-Format in Bucher.json.
+ */
 public class Buch {
-    private String titel;
-    private String isbn;
-    private Date erscheinungsjahr;
-    private String beschreibung;
+    @JsonProperty("bookId")
+    private String bookId;
 
-    private Autor autor;
-    private Verlag verlag;
-    private List<Genre> genres;
-    private List<Rezension> rezensionen;
+    @JsonProperty("title")
+    private String title;
 
-    public Buch(String titel, String isbn, Date erscheinungsjahr, String beschreibung,
-                Autor autor, Verlag verlag,
-                List<Genre> genres, List<Rezension> rezensionen) {
-        this.titel = titel;
-        this.isbn = isbn;
-        this.erscheinungsjahr = erscheinungsjahr;
-        this.beschreibung = beschreibung;
-        this.autor = autor;
-        this.verlag = verlag;
-        this.genres = genres != null ? genres : new ArrayList<>();
-        this.rezensionen = rezensionen != null ? rezensionen : new ArrayList<>();
+    @JsonProperty("author")
+    private String author;
+
+    @JsonProperty("publisher")
+    private String publisher;
+
+    @JsonProperty("genres")
+    private List<String> genres = new ArrayList<>();
+
+    // No-Arg-Konstruktor für Jackson
+    public Buch() {}
+
+    public String getBookId() {
+        return bookId;
+    }
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
-    // Constructor testing
-    public Buch(String titel, String isbn, Date erscheinungsjahr, String beschreibung) {
-        this(titel, isbn, erscheinungsjahr, beschreibung,
-             null, null, new ArrayList<>(), new ArrayList<>());
+    public String getTitle() {
+        return title;
     }
-    
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getTitel() { return titel; }
-    public String getIsbn() { return isbn; }
-    public Date getErscheinungsjahr() { return erscheinungsjahr; }
-    public String getBeschreibung() { return beschreibung; }
+    public String getAuthor() {
+        return author;
+    }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public Autor getAutor() { return autor; }
-    public Verlag getVerlag() { return verlag; }
-    public List<Genre> getGenres() { return genres; }
-    public List<Rezension> getRezensionen() { return rezensionen; }
+    public String getPublisher() {
+        return publisher;
+    }
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
 
     @Override
     public String toString() {
-        return "Buch{" +
-                "titel='" + titel + '\'' +
-                ", autor=" + autor +
-                '}';
+        return String.format(
+            "Buch{bookId='%s', title='%s', author='%s', publisher='%s'}",
+            bookId, title, author, publisher
+        );
     }
 }
+

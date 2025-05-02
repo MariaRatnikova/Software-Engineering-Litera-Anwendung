@@ -1,58 +1,57 @@
-import java.util.*;
-
+import java.util.List;
 
 /**
- * Interface für die Anwendung
- * Definiert die grundlegenden Methoden für die Interaktion mit dem Buchverwaltungssystem
+ * Interface für die Anwendungsschicht des Bücherkatalogs.
+ * Alle Methoden arbeiten mit bookId als String, passend zur JSON-Struktur.
  */
 public interface ApplicationInterface {
+
     /**
-     * Sucht nach Büchern mit dem angegebenen Titel
-     * @param titel Der zu suchende Titel
-     * @return Liste der gefundenen Bücher
+     * Sucht nach Büchern anhand des Titels (Teilstring, case-insensitive).
+     * @param titel Teilstring des Titels
+     * @return Liste der passenden Bücher
      */
     List<Buch> buchsuche(String titel);
-    
+
     /**
-     * Sucht nach Büchern eines bestimmten Autors
-     * @param autorName Der Name des Autors
-     * @return Liste der gefundenen Bücher
+     * Sucht nach Büchern eines bestimmten Autors (Teilstring, case-insensitive).
+     * @param autorName Name oder Teilname des Autors
+     * @return Liste der passenden Bücher
      */
     List<Buch> sucheNachAutor(String autorName);
-    
+
     /**
-     * Sucht nach Büchern eines bestimmten Genres
-     * @param genreName Der Name des Genres
-     * @return Liste der gefundenen Bücher
+     * Sucht nach Büchern eines bestimmten Genres (Teilstring, case-insensitive).
+     * @param genreName Name oder Teilname des Genres
+     * @return Liste der passenden Bücher
      */
     List<Buch> sucheNachGenre(String genreName);
-    
+
     /**
-     * Sucht nach Büchern eines bestimmten Verlags
-     * @param verlagName Der Name des Verlags
-     * @return Liste der gefundenen Bücher
+     * Sucht nach Büchern eines bestimmten Verlags (Teilstring, case-insensitive).
+     * @param verlagName Name oder Teilname des Verlags
+     * @return Liste der passenden Bücher
      */
     List<Buch> sucheNachVerlag(String verlagName);
-    
-    /**
-     * Gibt die Details eines Buches anhand seiner ID zurück
-     * @param id Die ID des Buches
-     * @return Das gefundene Buch oder null, wenn kein Buch mit dieser ID existiert
-     */
-    Buch buchdetails(int id);
-    
-    /**
-     * Gibt alle Rezensionen eines Buches zurück
-     * @param buchId Die ID des Buches
-     * @return Liste der Rezensionen
-     */
-    List<Rezension> showRezensionen(int buchId);
-    
-    /**
-     * Fügt eine Rezension zu einem Buch hinzu
-     * @param id Die ID des Buches
-     * @param r Die hinzuzufügende Rezension
-     */
-    void reviewHinzufuegen(int id, Rezension r);
-}
 
+    /**
+     * Gibt die Details für ein Buch anhand seiner bookId zurück.
+     * @param bookId Eindeutige Buch-ID als String
+     * @return Das Buch-Objekt oder null, falls nicht gefunden
+     */
+    Buch buchdetails(String bookId);
+
+    /**
+     * Zeigt alle Rezensionen für ein bestimmtes Buch an.
+     * @param bookId Eindeutige Buch-ID als String
+     * @return Liste mit Rezensionen
+     */
+    List<Rezension> showRezensionen(String bookId);
+
+    /**
+     * Fügt eine Rezension zu einem Buch hinzu.
+     * @param bookId Eindeutige Buch-ID als String
+     * @param rezension Die hinzuzufügende Rezension
+     */
+    void reviewHinzufuegen(String bookId, Rezension rezension);
+}

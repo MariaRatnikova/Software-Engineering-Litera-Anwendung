@@ -1,7 +1,8 @@
-import java.util.*;
-
 public class Autor {
     private String name;
+
+    /** No-Arg-Konstruktor für Jackson */
+    public Autor() {}
 
     public Autor(String name) {
         this.name = name;
@@ -15,9 +16,8 @@ public class Autor {
         this.name = name;
     }
 
-
     @Override
     public String toString() {
-        return "Autor{name='" + name + "}";
+        return "Autor{name='" + name + "'}";
     }
-    }
+}
