@@ -1,29 +1,44 @@
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Modellklasse für Bücher, passend zum JSON-Format in Bucher.json.
+ * Modellklasse für Bücher.
+ * Diese Klasse spiegelt die Struktur der JSON-Dateien wider,
+ * z. B. Bucher.json, und wird von Jackson verwendet, um Daten zu serialisieren und deserialisieren.
  */
 public class Buch {
+
+    // Eindeutige ID des Buches
     @JsonProperty("bookId")
     private String bookId;
 
+    // Titel des Buches
     @JsonProperty("title")
     private String title;
 
+    // Name des Autors oder der Autorin
     @JsonProperty("author")
     private String author;
 
+    // Verlag des Buches
     @JsonProperty("publisher")
     private String publisher;
 
+    // Liste der Genres, z. B. „Fantasy“, „Drama“ usw.
     @JsonProperty("genres")
     private List<String> genres = new ArrayList<>();
 
-    // No-Arg-Konstruktor für Jackson
+    // Beschreibung des Buches (z. B. für Detailansicht)
+    private String description;
+
+    /**
+     * Standardkonstruktor (erforderlich für Jackson).
+     */
     public Buch() {}
 
+    // Getter und Setter für bookId
     public String getBookId() {
         return bookId;
     }
@@ -31,6 +46,7 @@ public class Buch {
         this.bookId = bookId;
     }
 
+    // Getter und Setter für title
     public String getTitle() {
         return title;
     }
@@ -38,6 +54,7 @@ public class Buch {
         this.title = title;
     }
 
+    // Getter und Setter für author
     public String getAuthor() {
         return author;
     }
@@ -45,6 +62,7 @@ public class Buch {
         this.author = author;
     }
 
+    // Getter und Setter für publisher
     public String getPublisher() {
         return publisher;
     }
@@ -52,6 +70,7 @@ public class Buch {
         this.publisher = publisher;
     }
 
+    // Getter und Setter für genres
     public List<String> getGenres() {
         return genres;
     }
@@ -59,6 +78,18 @@ public class Buch {
         this.genres = genres;
     }
 
+    // Getter und Setter für description
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gibt eine kompakte Textdarstellung des Buchobjekts zurück.
+     * Nützlich für Debugging und Logausgaben.
+     */
     @Override
     public String toString() {
         return String.format(
@@ -67,4 +98,3 @@ public class Buch {
         );
     }
 }
-

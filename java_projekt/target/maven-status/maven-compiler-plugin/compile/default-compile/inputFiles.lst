@@ -1,9 +1,15 @@
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\ApplicationInterface.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Verlag.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\StorageService.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Buchkatalog.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Buch.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Controller.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Genre.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Autor.java
-C:\Users\heber\Software-Engineering-Litera-Anwendung\java_projekt\Rezension.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/ApplicationInterface.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/CheckJson.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/StartPanel.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Controller.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/ReviewPanel.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Autor.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Rezension.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Verlag.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Buch.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/StorageService.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/BookDetails.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Genre.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/ApplicationWindow.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/BookListPanel.java
+/Users/marija_ratnikova/Desktop/Uni/4.Semester/Software Engineering 2/Software-Engineering-Litera-Anwendung/java_projekt/Buchkatalog.java
