@@ -5,8 +5,8 @@
   <artifactId>buchkatalog</artifactId>
   <name>Bücherkatalog-Anwendung</name>
   <version>1.0.0</version>
-  <description>Entwicklung einer Bücherkatalog-Anwendung für Firma Litera</description>
-  <url>http://www.litera.de</url>
+  <description>Litera Book Catalogue: Desktop-Anwendung zur Buchsuche und -bewertung</description>
+  <url>https://www.litera.de</url>
   <developers>
     <developer>
       <name>Ranim Khallouf</name>
@@ -48,6 +48,9 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>all</shadedClassifierName>
               <transformers>
                 <transformer>
                   <mainClass>ApplicationWindow</mainClass>
@@ -66,6 +69,37 @@
               <mainClass>ApplicationWindow</mainClass>
             </manifest>
           </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.wvengen</groupId>
+        <artifactId>proguard-maven-plugin</artifactId>
+        <version>2.4.0</version>
+        <executions>
+          <execution>
+            <id>obfuscate</id>
+            <phase>package</phase>
+            <goals>
+              <goal>proguard</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <injars>
+            <injar>${project.build.directory}/${project.build.finalName}-all.jar</injar>
+          </injars>
+          <outjars>
+            <outjar>${project.build.directory}/${project.build.finalName}-all-obf.jar</outjar>
+          </outjars>
+          <libraryjars>
+            <libraryjar>${java.home}/lib/jrt-fs.jar</libraryjar>
+          </libraryjars>
+          <options>
+            <option>-keep public class ApplicationWindow { public static void main(java.lang.String[]); }</option>
+            <option>-dontwarn</option>
+            <option>-dontoptimize</option>
+            <option>-printmapping ${project.build.directory}/mapping.txt</option>
+          </options>
         </configuration>
       </plugin>
     </plugins>
