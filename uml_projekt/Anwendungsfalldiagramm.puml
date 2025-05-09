@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Kunde
+
+rectangle "Litera Bücherkatalog-Anwendung" {
+  usecase "Suchbegriff eingeben" as U1
+  usecase "Suchkategorie wählen" as U2
+  usecase "Buch suchen" as U3
+  usecase "Buch aus Liste auswählen" as U4
+  usecase "Buchdetails anzeigen" as U5
+  usecase "Rezension anzeigen" as U6
+  usecase "Rezension schreiben" as U7
+}
+
+
+Kunde --> U4
+Kunde --> U3
+
+
+U3 --> U1 : <<include>>
+U3 --> U2 : <<include>>
+
+U5 .u.> U4 : <<extend>>
+U6 .u.> U4 : <<extend>>
+U7 .u.> U4 : <<extend>>
+
+@enduml

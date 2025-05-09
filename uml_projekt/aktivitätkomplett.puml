@@ -25,9 +25,7 @@ partition Benutzer {
 partition System {
     :Buchdetails anzeigen;
 }
-partition Benutzer {
-  :Clickt auf Show reviews;
-}
+
 
 partition System {
     if (Rezensionen vorhanden?) then (ja)
@@ -47,16 +45,12 @@ partition Benutzer {
 }
 
 partition System {
-  if (Eingabe vollständig?) then (ja)
-    :Rezension speichern in JSON;
-    if (Speichern erfolgreich?) then (ja)
-      :Erfolgsmeldung anzeigen;
-    else (nein)
-      :Fehlermeldung beim Speichern anzeigen;
-    endif
-  else (nein)
-    :Hinweis anzeigen: Alle Richtig ausfüllen;
-  endif
+  if (Bewertung gültig?) then (ja)
+  :Rezension erstellen;
+else (nein)
+  :Fehlermeldung anzeigen;
+endif
+
 }
 
 partition Benutzer {

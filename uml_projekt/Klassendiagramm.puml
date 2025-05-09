@@ -1,5 +1,31 @@
 @startuml Klassendiagramm
 skinparam classAttributeIconSize 0
+class ApplicationWindow {
+  +main(args: String[]): void
+}
+
+class BookListPanel {
+  +aktualisiereListe(buecher: List<Buch>): void
+  +filterAnwenden(): void
+}
+
+class BookDetails {
+  +zeigeDetails(b: Buch): void
+  +openAddDialog(b: Buch): void
+}
+
+class StartPanel {
+  +initComponents(): void
+}
+
+ApplicationWindow --> BookListPanel
+ApplicationWindow --> BookDetails
+ApplicationWindow --> StartPanel
+ApplicationWindow --> Controller : verwendet
+BookListPanel --> Controller : verwendet
+BookDetails --> Controller : verwendet
+
+Controller ..|> ApplicationInterface
 
 interface ApplicationInterface {
   +buchsuche(titel: String): List<Buch>
