@@ -1,8 +1,7 @@
 /*
  * StartPanel.java
  * ---------------------------------------------------------------------
- * Begrüßungs-/Startansicht der Desktop-Applikation „Litera Book Catalog“.
- 
+ * Welcome/start screen of the desktop application "Litera Book Catalog".
  */
 
 import java.awt.BorderLayout;
@@ -21,13 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Start-/Willkommensbildschirm.<br>
- * Zeigt Logo, Titel, Untertitel und einen Button, der zur Buchliste wechselt.
+ * Start/welcome screen.<br>
+ * Displays logo, title, subtitle, and a button that switches to the book list.
  */
 public final class StartPanel extends JPanel {
 
     /* ------------------------------------------------------------------
-     * Konstanten – Farben / Größen
+     * Constants – Colors / Sizes
      * ----------------------------------------------------------------- */
     private static final Color COLOR_BACKGROUND = new Color(7, 31, 45);
     private static final Color COLOR_ACCENT     = new Color(52, 121, 122);
@@ -35,19 +34,19 @@ public final class StartPanel extends JPanel {
     private static final Dimension BTN_SIZE = new Dimension(295, 75);
 
     /**
-     * Erstellt den Start-Screen.
+     * Creates the start screen.
      *
-     * @param layout  gemeinsam genutztes {@link CardLayout}
-     * @param parent  übergeordnetes Panel, das das {@code CardLayout} enthält
+     * @param layout  shared {@link CardLayout}
+     * @param parent  parent panel containing the {@code CardLayout}
      */
     public StartPanel(final CardLayout layout, final JPanel parent) {
         super(new BorderLayout());
         setBackground(COLOR_BACKGROUND);
 
-        /* ---------- zentrales vertikales Panel ------------------------ */
+        /* ---------- Central vertical panel ------------------------ */
         JPanel center = new JPanel();
         center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
-        center.setOpaque(false); // transparenter Hintergrund
+        center.setOpaque(false); // transparent background
 
         /* --------------------------- Logo ----------------------------- */
         ImageIcon rawLogo  = new ImageIcon("src/main/java/images/Logo Weiss.png");
@@ -56,13 +55,13 @@ public final class StartPanel extends JPanel {
         JLabel    logoLbl  = new JLabel(new ImageIcon(imgLogo));
         logoLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* ------------------------ Haupttitel -------------------------- */
+        /* ------------------------ Main title -------------------------- */
         JLabel titleLbl = new JLabel("Litera Book Catalog");
         titleLbl.setFont(new Font("Arial", Font.BOLD, 72));
         titleLbl.setForeground(Color.WHITE);
         titleLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* ------------------------ Untertitel -------------------------- */
+        /* ------------------------ Subtitle ---------------------------- */
         JLabel subtitleLbl = new JLabel("Explore. Discover. Read.");
         subtitleLbl.setFont(new Font("Arial", Font.PLAIN, 32));
         subtitleLbl.setForeground(Color.WHITE);
@@ -74,7 +73,7 @@ public final class StartPanel extends JPanel {
         startBtn.setBackground(COLOR_ACCENT);
         startBtn.setForeground(Color.WHITE);
         startBtn.setOpaque(true);
-        startBtn.setContentAreaFilled(false); // kein Swing-Standardhintergrund
+        startBtn.setContentAreaFilled(false); // no default Swing background
         startBtn.setBorderPainted(false);
         startBtn.setFocusPainted(false);
         startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -82,10 +81,10 @@ public final class StartPanel extends JPanel {
         startBtn.setMaximumSize(BTN_SIZE);
         startBtn.setMinimumSize(BTN_SIZE);
 
-        /* ---- Aktion: zur Bücherliste wechseln ----------------------- */
+        /* ---- Action: switch to book list ---------------------------- */
         startBtn.addActionListener(evt -> layout.show(parent, "list"));
 
-        /* ---- Komponenten anordnen ----------------------------------- */
+        /* ---- Arrange components ------------------------------------- */
         center.add(Box.createVerticalGlue());
         center.add(logoLbl);
         center.add(Box.createRigidArea(new Dimension(0, 20)));

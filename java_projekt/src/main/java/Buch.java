@@ -4,38 +4,38 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Modellklasse für Bücher.
- * Diese Klasse spiegelt die Struktur der JSON-Dateien wider,
- * z. B. books.json, und wird von Jackson verwendet,
- * um Daten zu serialisieren und deserialisieren.
+ * Model class for books.
+ * This class reflects the structure of JSON files,
+ * such as books.json, and is used by Jackson
+ * for serialization and deserialization of data.
  */
 public class Buch {
 
-    // Eindeutige ID des Buches
+    // Unique ID of the book
     @JsonProperty("bookId")
     private String bookId;
 
-    // Titel des Buches
+    // Title of the book
     @JsonProperty("title")
     private String title;
 
-    // Name des Autors oder der Autorin
+    // Name of the author
     @JsonProperty("author")
     private String author;
 
-    // Verlag des Buches
+    // Publisher of the book
     @JsonProperty("publisher")
     private String publisher;
 
-    // Liste der Genres, z. B. „Fantasy“, „Drama“ usw.
+    // List of genres, e.g., "Fantasy", "Drama", etc.
     @JsonProperty("genres")
     private List<String> genres = new ArrayList<>();
 
-    // Beschreibung des Buches (z. B. für Detailansicht)
+    // Description of the book (e.g., for the detail view)
     private String description;
 
     /**
-     * Standardkonstruktor (erforderlich für Jackson).
+     * Default constructor (required by Jackson).
      */
     public Buch() {
     }
@@ -91,10 +91,10 @@ public class Buch {
     }
 
     /**
-     * Gibt eine kompakte Textdarstellung des Buchobjekts zurück.
-     * Nützlich für Debugging und Logausgaben.
+     * Returns a compact text representation of the book object.
+     * Useful for debugging and logging output.
      *
-     * @return String-Repräsentation des Buches
+     * @return String representation of the book
      */
     @Override
     public String toString() {

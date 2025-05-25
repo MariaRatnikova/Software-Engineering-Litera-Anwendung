@@ -1,11 +1,10 @@
 /*
  * BookDetails.java
  * ------------------------------------------------------------------
- * Detailansicht für ein einzelnes Buch:
- *   • Grunddaten (Titel, Autor, Verlag, Genres, Beschreibung)
- *   • Scrollbare Liste aller vorhandenen Rezensionen
- *   • Button „Write review“ zum Anlegen neuer Rezensionen
- 
+ * Detailed view for a single book:
+ *   • Basic data (title, author, publisher, genres, description)
+ *   • Scrollable list of all existing reviews
+ *   • “Write review” button for adding new reviews
  */
 
 import java.awt.BorderLayout;
@@ -28,49 +27,49 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 /**
- * Panel, das die Details eines Buches sowie dessen Rezensionen zeigt.
+ * Panel that displays the details of a book along with its reviews.
  */
 public final class BookDetails extends JPanel {
 
     /* ---------------------------------------------------------------
-     * Farbschema & Layout-Grenzen
-     * -------------------------------------------------------------- */
+ * Color scheme & layout boundaries
+ * -------------------------------------------------------------- */
     private static final Color COLOR_BG         = new Color(8, 25, 40);
     private static final Color COLOR_ACCENT     = new Color(166, 221, 211);
     private static final Color COLOR_CARD_BG    = new Color(19, 41, 59);
     private static final Color COLOR_BUTTON_FG  = Color.WHITE;
     private static final int   WIDTH_MAX        = 1_250;
 
-    /* ---------------------------------------------------------------
-     * Navigation & Logik
-     * -------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+ * Navigation & logic
+ * -------------------------------------------------------------- */
+
     private final CardLayout           navigator;
     private final JPanel               parent;
     private final ApplicationInterface controller;
 
-    /* ---------------------------------------------------------------
-     * Zustand
-     * -------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * State
+ * -------------------------------------------------------------- */
     private Buch currentBook;
 
-    /* ---------------------------------------------------------------
-     * UI-Elemente – Buchdaten
-     * -------------------------------------------------------------- */
+   /* ---------------------------------------------------------------
+ * UI elements – Book data
+ * -------------------------------------------------------------- */
     private final JLabel    titleLabel  = label("", 32, Font.BOLD, Color.WHITE);
     private final JLabel    authorLabel = label("", 20, Font.PLAIN, Color.WHITE);
     private final JLabel    publLabel   = label("", 16, Font.PLAIN, COLOR_ACCENT);
     private final JLabel    genreLabel  = label("", 16, Font.PLAIN, COLOR_ACCENT);
     private final JTextArea descArea    = descriptionArea();
+/* ---------------------------------------------------------------
+ * UI elements – Reviews
+ * -------------------------------------------------------------- */
 
-    /* ---------------------------------------------------------------
-     * UI-Elemente – Rezensionen
-     * -------------------------------------------------------------- */
     private final JPanel     reviewListPanel = new JPanel();
     private final JScrollPane reviewPane;
-
-    /* ---------------------------------------------------------------
-     * Konstruktor
-     * -------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * Constructor
+ * -------------------------------------------------------------- */
     public BookDetails(CardLayout navigator, JPanel parent,
             ApplicationInterface controller) {
 
@@ -81,7 +80,7 @@ public final class BookDetails extends JPanel {
 
         setBackground(COLOR_BG);
 
-        /* Top-Leiste mit Zurück-Button -------------------------------- */
+        /* Top bar with back button -------------------------------- */
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setOpaque(false);
         topBar.setBorder(new EmptyBorder(20, 30, 0, 30));
@@ -91,14 +90,14 @@ public final class BookDetails extends JPanel {
         topBar.add(backBtn, BorderLayout.WEST);
         add(topBar, BorderLayout.NORTH);
 
-        /* Zentrale vertikale Spalte ----------------------------------- */
+        /* Central vertical column ----------------------------------- */
         JPanel column = new JPanel();
         column.setOpaque(false);
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
         column.setBorder(new EmptyBorder(20, 80, 40, 80));
         add(column, BorderLayout.CENTER);
 
-        /* Buch-Grundinformationen ------------------------------------ */
+        /* Book basic information ------------------------------------ */
         JPanel infoBox = new JPanel();
         infoBox.setOpaque(false);
         infoBox.setLayout(new BoxLayout(infoBox, BoxLayout.Y_AXIS));
@@ -119,7 +118,7 @@ public final class BookDetails extends JPanel {
         infoBox.setMaximumSize(new Dimension(WIDTH_MAX, Integer.MAX_VALUE));
         column.add(infoBox);
 
-        /* Überschrift „Reviews“ + Button ------------------------------ */
+       /* Heading “Reviews” + Button ------------------------------ */
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         header.setAlignmentX(LEFT_ALIGNMENT);
@@ -134,7 +133,7 @@ public final class BookDetails extends JPanel {
 
         column.add(header);
 
-        /* Scrollbare Review-Liste ------------------------------------- */
+      /* Scrollable review list ------------------------------------- */
         reviewListPanel.setOpaque(false);
         reviewListPanel.setLayout(new BoxLayout(reviewListPanel, BoxLayout.Y_AXIS));
 
@@ -150,15 +149,16 @@ public final class BookDetails extends JPanel {
         column.add(reviewPane);
     }
 
-    /* ---------------------------------------------------------------
-     * Public API
-     * -------------------------------------------------------------- */
+   /* ---------------------------------------------------------------
+ * Public API
+ * -------------------------------------------------------------- */
 
-    /**
-     * Zeigt die Daten des übergebenen Buches an.
-     *
-     * @param book Buch, das dargestellt werden soll
-     */
+   /**
+ * Displays the data of the given book.
+ *
+ * @param book Book to be displayed
+ */
+
     public void showBook(Buch book) {
         currentBook = book;
 
@@ -177,7 +177,7 @@ public final class BookDetails extends JPanel {
         descArea.setText(description == null || description.isBlank()
                          ? "(no description)" : description);
 
-        /* Höhe der Beschreibung begrenzen --------------------------- */
+       /* Limit height of the description --------------------------- */
         int visibleLines = Math.min(descArea.getLineCount(), 6);
         descArea.setRows(visibleLines);
         Dimension size = descArea.getPreferredSize();
@@ -186,9 +186,10 @@ public final class BookDetails extends JPanel {
         loadReviews();
     }
 
-    /* ---------------------------------------------------------------
-     * Private Hilfsmethoden
-     * -------------------------------------------------------------- */
+   /* ---------------------------------------------------------------
+ * Private helper methods
+ * -------------------------------------------------------------- */
+
     private void loadReviews() {
         reviewListPanel.removeAll();
         if (currentBook == null) {
@@ -270,9 +271,9 @@ public final class BookDetails extends JPanel {
         }
     }
 
-    /* ---------------------------------------------------------------
-     * Mini-Utilities
-     * -------------------------------------------------------------- */
+   /* ---------------------------------------------------------------
+ * Mini-utilities
+ * -------------------------------------------------------------- */
     private static JLabel label(String text, int size, int style, Color color) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(new Font("Arial", style, size));

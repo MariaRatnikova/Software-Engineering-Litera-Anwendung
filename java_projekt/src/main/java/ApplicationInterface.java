@@ -1,79 +1,79 @@
 /*
  * ApplicationInterface.java
  * ------------------------------------------------------------------
- * Zentrale Schnittstelle der Geschäftslogik.
+ * Central interface of the business logic.
  */
 
 import java.util.List;
 
 /**
- * Definiert alle Operationen, die die Präsentationsschicht mit der Geschäftslogik ausführt.
+ * Defines all operations that the presentation layer performs with the business logic.
  * <p>
- * Buchrecherche → Details → Rezensionen hinzufügen bzw. anzeigen.
+ * Book search → details → add or display reviews.
  */
 public interface ApplicationInterface {
 
     /* ------------------------------------------------------------------
-     * Buch­suche
+     * Book search
      * ---------------------------------------------------------------- */
 
     /**
-     * Sucht Bücher, deren Titel den übergebenen String enthalten.
+     * Searches for books whose titles contain the given string.
      *
-     * @param titel Suchbegriff für den Titel (Teilstring)
-     * @return Liste passender {@link Buch}-Objekte (nie {@code null})
+     * @param titel Search term for the title (substring)
+     * @return List of matching {@link Buch} objects (never {@code null})
      */
     List<Buch> buchsuche(String titel);
 
     /**
-     * Sucht Bücher nach Autor(en)-Name.
+     * Searches for books by author name.
      *
-     * @param autorName Teil- oder Vollname des Autors
-     * @return Liste der gefundenen Bücher
+     * @param autorName Partial or full name of the author
+     * @return List of found books
      */
     List<Buch> sucheNachAutor(String autorName);
 
     /**
-     * Sucht Bücher nach Genre.
+     * Searches for books by genre.
      *
-     * @param genreName Name des Genres
-     * @return Liste der gefundenen Bücher
+     * @param genreName Name of the genre
+     * @return List of found books
      */
     List<Buch> sucheNachGenre(String genreName);
 
     /**
-     * Sucht Bücher nach Verlag.
+     * Searches for books by publisher.
      *
-     * @param verlagName Name des Verlags
-     * @return Liste der gefundenen Bücher
+     * @param verlagName Name of the publisher
+     * @return List of found books
      */
     List<Buch> sucheNachVerlag(String verlagName);
 
     /* ------------------------------------------------------------------
-     * Details & Rezensionen
+     * Details & Reviews
      * ---------------------------------------------------------------- */
 
     /**
-     * Liefert die vollständigen Details zu einem Buch.
+     * Returns the complete details of a book.
      *
-     * @param id Buch-ID
-     * @return {@link Buch}-Objekt oder {@code null}, falls nicht gefunden
+     * @param id Book ID
+     * @return {@link Buch} object or {@code null} if not found
      */
     Buch buchdetails(String id);
 
     /**
-     * Gibt alle Rezensionen zu einem Buch zurück.
+     * Returns all reviews for a given book.
      *
-     * @param id Buch-ID
-     * @return Liste der vorhandenen Rezensionen (nie {@code null})
+     * @param id Book ID
+     * @return List of existing reviews (never {@code null})
      */
     List<Rezension> showRezensionen(String id);
 
     /**
-     * Fügt einer Buch­entität eine neue Rezension hinzu und speichert sie.
+     * Adds a new review to a book entity and saves it.
      *
-     * @param id        Buch-ID
-     * @param rezension Neues {@link Rezension}-Objekt
+     * @param id        Book ID
+     * @param rezension New {@link Rezension} object
      */
     void reviewHinzufuegen(String id, Rezension rezension);
 }

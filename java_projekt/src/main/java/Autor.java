@@ -1,51 +1,51 @@
 /**
- * Repräsentiert einen Autor eines Buches.
- * Wird als Modellklasse verwendet, z. B. in JSON-Dateien oder zur Anzeige.
+ * Represents an author of a book.
+ * Used as a model class, e.g., in JSON files or for display.
  */
 public class Autor {
 
-    // Name des Autors
+    // Name of the author
     private String name;
 
     /**
-     * Leerer Konstruktor („No-Arg-Konstruktor“).
-     * Wird z. B. von Jackson für die automatische Deserialisierung benötigt.
+     * No-argument constructor.
+     * Required by frameworks like Jackson for automatic deserialization.
      */
     public Autor() {
     }
 
     /**
-     * Konstruktor mit Parameter – zum einfachen Erstellen eines Autors mit Name.
+     * Constructor with parameter – to easily create an author with a name.
      *
-     * @param name Der Name des Autors
+     * @param name The name of the author
      */
     public Autor(String name) {
         this.name = name;
     }
 
     /**
-     * Gibt den Namen des Autors zurück.
+     * Returns the name of the author.
      *
-     * @return Name des Autors
+     * @return Author's name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Setzt den Namen des Autors.
+     * Sets the name of the author.
      *
-     * @param name Neuer Name
+     * @param name New name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Gibt eine lesbare Textdarstellung des Autors zurück.
-     * Wird z. B. beim Debuggen oder in Listenanzeigen verwendet.
+     * Returns a readable string representation of the author.
+     * Useful for debugging or in list displays.
      *
-     * @return Textdarstellung
+     * @return Text representation
      */
     @Override
     public String toString() {

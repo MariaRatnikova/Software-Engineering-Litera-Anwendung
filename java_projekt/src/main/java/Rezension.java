@@ -1,130 +1,130 @@
 import java.util.Date;
 
 /**
- * Modellklasse für anonyme Rezensionen eines Buches.
- * Eine Rezension besteht aus einer Bewertung (z. B. 1–5 Sterne), einem Kommentar,
- * dem Datum der Abgabe und der ID des Buches, auf das sie sich bezieht.
+ * Model class for anonymous reviews of a book.
+ * A review consists of a rating (e.g., 1–5 stars), a comment,
+ * the submission date, and the ID of the related book.
  */
 public class Rezension {
 
-    /** Die ID des Buches, zu dem die Rezension gehört. */
+    /** The ID of the book to which this review belongs. */
     private String bookId;
 
-    /** Bewertung (z. B. 1 bis 5 Sterne). */
-    private int bewertung;
+    /** Rating (e.g., 1 to 5 stars). */
+    private int rating;
 
-    /** Freitext-Kommentar der Rezension. */
-    private String kommentar;
+    /** Free-text comment of the review. */
+    private String comment;
 
-    /** Datum, an dem die Rezension abgegeben wurde. */
-    private Date datum;
+    /** Date the review was submitted. */
+    private Date date;
 
     /**
-     * No-Argument-Konstruktor.
-     * Wird benötigt für Frameworks wie Jackson, um Objekte aus JSON zu erstellen.
+     * No-argument constructor.
+     * Required for frameworks like Jackson to create objects from JSON.
      */
     public Rezension() {
     }
 
     /**
-     * Konstruktor mit allen Attributen.
+     * Constructor with all attributes.
      *
-     * @param bookId    ID des zugehörigen Buches
-     * @param bewertung Bewertung des Buches (z. B. 4)
-     * @param kommentar Freitext-Kommentar
-     * @param datum     Datum der Rezension
+     * @param bookId   ID of the associated book
+     * @param rating   Rating of the book (e.g., 4)
+     * @param comment  Free-text comment
+     * @param date     Date of the review
      */
-    public Rezension(String bookId, int bewertung, String kommentar, Date datum) {
+    public Rezension(String bookId, int rating, String comment, Date date) {
         this.bookId = bookId;
-        this.bewertung = bewertung;
-        this.kommentar = kommentar;
-        this.datum = datum;
+        this.rating = rating;
+        this.comment = comment;
+        this.date = date;
     }
 
     /**
-     * Gibt die Buch-ID zurück.
+     * Returns the book ID.
      *
-     * @return Buch-ID
+     * @return Book ID
      */
     public String getBookId() {
         return bookId;
     }
 
     /**
-     * Setzt die Buch-ID.
+     * Sets the book ID.
      *
-     * @param bookId Buch-ID
+     * @param bookId Book ID
      */
     public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
     /**
-     * Gibt die Bewertung zurück.
+     * Returns the rating.
      *
-     * @return Bewertung
+     * @return Rating
      */
     public int getBewertung() {
-        return bewertung;
+        return rating;
     }
 
     /**
-     * Setzt die Bewertung.
+     * Sets the rating.
      *
-     * @param bewertung Neue Bewertung
+     * @param rating New rating
      */
-    public void setBewertung(int bewertung) {
-        this.bewertung = bewertung;
+    public void setBewertung(int rating) {
+        this.rating = rating;
     }
 
     /**
-     * Gibt den Kommentar zurück.
+     * Returns the comment.
      *
-     * @return Kommentartext
+     * @return Comment text
      */
     public String getKommentar() {
-        return kommentar;
+        return comment;
     }
 
     /**
-     * Setzt den Kommentar.
+     * Sets the comment.
      *
-     * @param kommentar Kommentartext
+     * @param comment Comment text
      */
-    public void setKommentar(String kommentar) {
-        this.kommentar = kommentar;
+    public void setKommentar(String comment) {
+        this.comment = comment;
     }
 
     /**
-     * Gibt das Datum der Rezension zurück.
+     * Returns the review date.
      *
-     * @return Datum
+     * @return Date
      */
     public Date getDatum() {
-        return datum;
+        return date;
     }
 
     /**
-     * Setzt das Datum der Rezension.
+     * Sets the review date.
      *
-     * @param datum Datum
+     * @param date Date
      */
-    public void setDatum(Date datum) {
-        this.datum = datum;
+    public void setDatum(Date date) {
+        this.date = date;
     }
 
     /**
-     * Gibt eine textuelle Darstellung der Rezension zurück.
+     * Returns a string representation of the review.
      *
-     * @return String-Repräsentation
+     * @return String representation
      */
     @Override
     public String toString() {
         return "Rezension{" +
                "bookId='" + bookId + '\'' +
-               ", bewertung=" + bewertung +
-               ", kommentar='" + kommentar + '\'' +
-               ", datum=" + datum +
+               ", rating=" + rating +
+               ", comment='" + comment + '\'' +
+               ", date=" + date +
                '}';
     }
 }

@@ -2,32 +2,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Diese Klasse enthält die Geschäftslogik für das Durchsuchen und Filtern von Büchern
- * sowie den Zugriff auf Rezensionen (Bewertungen).
+ * This class contains the business logic for searching and filtering books
+ * as well as accessing reviews (ratings).
  */
 public class Buchkatalog {
 
-    // Liste aller verfügbaren Bücher im Katalog
+    // List of all available books in the catalog
     private final List<Buch> buecher;
 
-    // Zugriff auf die Datenspeicherung (z. B. Bücher und Rezensionen aus JSON laden/speichern)
+    // Access to the data storage (e.g., loading/saving books and reviews from/to JSON)
     private final StorageService storage;
 
     /**
-     * Konstruktor – lädt Bücher aus dem übergebenen StorageService.
+     * Constructor – loads books from the provided StorageService.
      *
-     * @param storageService Dienst zur Datenhaltung (z. B. JSON-Dateien)
+     * @param storageService Service for data handling (e.g., JSON files)
      */
     public Buchkatalog(StorageService storageService) {
         this.storage = storageService;
-        this.buecher = storageService.ladeBuecher(); // Bücher beim Start laden
+        this.buecher = storageService.ladeBuecher(); // Load books on startup
     }
 
     /**
-     * Sucht nach Büchern anhand des Titels.
+     * Searches for books by title.
      *
-     * @param query Suchtext (nicht case-sensitiv)
-     * @return Liste der Bücher, deren Titel den Suchtext enthalten
+     * @param query Search text (case-insensitive)
+     * @return List of books whose titles contain the search text
      */
     public List<Buch> buchsuche(String query) {
         String q = query == null ? "" : query.trim().toLowerCase();
@@ -41,10 +41,10 @@ public class Buchkatalog {
     }
 
     /**
-     * Sucht Bücher anhand des Autors.
+     * Searches for books by author.
      *
-     * @param autor Suchtext für Autor
-     * @return Liste der Bücher, bei denen der Autor den Suchtext enthält
+     * @param autor Search text for author
+     * @return List of books whose author contains the search text
      */
     public List<Buch> sucheNachAutor(String autor) {
         String q = autor == null ? "" : autor.trim().toLowerCase();
@@ -59,10 +59,10 @@ public class Buchkatalog {
     }
 
     /**
-     * Sucht Bücher anhand eines Genres.
+     * Searches for books by genre.
      *
-     * @param genre Suchtext für Genre
-     * @return Liste der Bücher, deren Genre mit dem Suchtext übereinstimmt
+     * @param genre Search text for genre
+     * @return List of books where any genre matches the search text
      */
     public List<Buch> sucheNachGenre(String genre) {
         String q = genre == null ? "" : genre.trim().toLowerCase();
@@ -78,10 +78,10 @@ public class Buchkatalog {
     }
 
     /**
-     * Sucht Bücher anhand des Verlags.
+     * Searches for books by publisher.
      *
-     * @param verlag Suchtext für Verlag
-     * @return Liste der Bücher, deren Verlag mit dem Suchtext übereinstimmt
+     * @param verlag Search text for publisher
+     * @return List of books whose publisher matches the search text
      */
     public List<Buch> sucheNachVerlag(String verlag) {
         String q = verlag == null ? "" : verlag.trim().toLowerCase();
@@ -96,10 +96,10 @@ public class Buchkatalog {
     }
 
     /**
-     * Gibt ein einzelnes Buch anhand seiner ID zurück.
+     * Returns a single book by its ID.
      *
-     * @param id ID des Buches
-     * @return Buch-Objekt oder null, wenn kein Buch mit dieser ID gefunden wurde
+     * @param id ID of the book
+     * @return Book object or null if no book was found with that ID
      */
     public Buch buchDetails(String id) {
         return buecher.stream()
@@ -109,11 +109,11 @@ public class Buchkatalog {
     }
 
     /**
-     * Fügt eine Rezension einem Buch hinzu.
+     * Adds a review to a book.
      *
-     * @param id  Buch-ID
-     * @param rez Rezension, die gespeichert werden soll
-     * @return true, wenn das Hinzufügen erfolgreich war, sonst false
+     * @param id  Book ID
+     * @param rez Review to be saved
+     * @return true if the addition was successful, otherwise false
      */
     public boolean reviewHinzufuegen(String id, Rezension rez) {
         Buch buch = buchDetails(id);
@@ -121,16 +121,16 @@ public class Buchkatalog {
             return false;
         }
 
-        rez.setBookId(id);           // ID wird der Rezension zugewiesen
-        storage.speichereRezension(rez); // Speicherung über StorageService
+        rez.setBookId(id);                // Assign ID to the review
+        storage.speichereRezension(rez);  // Save via StorageService
         return true;
     }
 
     /**
-     * Gibt alle Rezensionen zu einem bestimmten Buch zurück.
+     * Returns all reviews for a given book.
      *
-     * @param id Buch-ID
-     * @return Liste der passenden Rezensionen
+     * @param id Book ID
+     * @return List of matching reviews
      */
     public List<Rezension> showRezensionen(String id) {
         return storage.ladeRezensionen().stream()

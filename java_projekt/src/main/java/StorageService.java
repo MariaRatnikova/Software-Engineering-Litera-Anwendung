@@ -1,8 +1,8 @@
 /*
  * StorageService.java
  * ------------------------------------------------------------------
- * Lädt und speichert Buch- und Rezensions­daten im JSON-Format.
- * Arbeitet mit Jackson (ObjectMapper), um Java-Objekte zu (de)serialisieren.
+ * Loads and saves book and review data in JSON format.
+ * Uses Jackson (ObjectMapper) to (de)serialize Java objects.
  */
 
 import java.io.File;
@@ -14,31 +14,31 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Dienstklasse für Dateioperationen: <br>
- * • lädt Bücher und Rezensionen aus JSON-Dateien<br>
- * • speichert neue Rezensionen persistent
+ * Service class for file operations: <br>
+ * • loads books and reviews from JSON files<br>
+ * • persistently saves new reviews
  */
 public final class StorageService {
 
     /* ------------------------------------------------------------------
-     * Dateipfade
+     * File paths
      * ---------------------------------------------------------------- */
     private static final String BOOKS_FILE   = "src/main/java/books_short.json";
     private static final String REVIEWS_FILE = "src/main/java/reviews.json";
 
     /* ------------------------------------------------------------------
-     * Jackson ObjectMapper (wird wiederverwendet)
+     * Jackson ObjectMapper (reused instance)
      * ---------------------------------------------------------------- */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /* ------------------------------------------------------------------
-     * Öffentliche API
+     * Public API
      * ---------------------------------------------------------------- */
 
     /**
-     * Liest die Liste aller Bücher ein.
+     * Reads the list of all books.
      *
-     * @return Liste von {@link Buch}-Objekten (leer, falls Datei fehlt / Fehler)
+     * @return List of {@link Buch} objects (empty if file is missing / error)
      */
     public List<Buch> ladeBuecher() {
         File file = new File(BOOKS_FILE);
@@ -56,9 +56,9 @@ public final class StorageService {
     }
 
     /**
-     * Liest alle gespeicherten Rezensionen ein.
+     * Reads all stored reviews.
      *
-     * @return Liste von {@link Rezension}-Objekten (leer, falls Datei fehlt / Fehler)
+     * @return List of {@link Rezension} objects (empty if file is missing / error)
      */
     public List<Rezension> ladeRezensionen() {
         File file = new File(REVIEWS_FILE);
@@ -76,11 +76,11 @@ public final class StorageService {
     }
 
     /**
-     * Persistiert eine neue Rezension.<br>
-     * Vorhandene Rezensionen werden geladen, die neue wird hinzugefügt
-     * und anschließend wird die komplette Liste zurückgeschrieben.
+     * Persists a new review.<br>
+     * Existing reviews are loaded, the new one is added,
+     * and then the full list is written back.
      *
-     * @param review Rezension, die gespeichert werden soll
+     * @param review Review to be saved
      */
     public void speichereRezension(final Rezension review) {
         List<Rezension> allReviews = ladeRezensionen();

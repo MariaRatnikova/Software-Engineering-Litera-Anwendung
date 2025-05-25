@@ -1,30 +1,30 @@
 import java.util.List;
 
 /**
- * Dünne Steuerungsschicht, die den Buchkatalog über ein Interface nach außen bereitstellt.
- * Dient als Vermittler zwischen der Benutzeroberfläche und der internen Logik.
+ * Thin control layer that exposes the book catalog via an interface.
+ * Acts as a mediator between the user interface and internal logic.
  */
 public class Controller implements ApplicationInterface {
 
-    // Zentrale Kataloginstanz mit Such- und Rezensionslogik
+    // Central catalog instance with search and review logic
     private final Buchkatalog katalog;
 
     /**
-     * Konstruktor – erstellt den Buchkatalog auf Basis des übergebenen StorageService.
+     * Constructor – creates the book catalog based on the provided storage service.
      *
-     * @param storage Dienst zum Laden/Speichern von Büchern und Rezensionen
+     * @param storage Service for loading/saving books and reviews
      */
     public Controller(StorageService storage) {
         this.katalog = new Buchkatalog(storage);
     }
 
-    /* === Weiterleitung der Methoden an den Katalog ======================= */
+    /* === Forwarding methods to the catalog ======================= */
 
     /**
-     * Sucht Bücher nach Titel.
+     * Searches books by title.
      *
-     * @param q Suchbegriff für Titel
-     * @return Liste der passenden Bücher
+     * @param q Search term for title
+     * @return List of matching books
      */
     @Override
     public List<Buch> buchsuche(String q) {
@@ -32,10 +32,10 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Sucht Bücher nach Autor.
+     * Searches books by author.
      *
-     * @param q Suchbegriff für Autor
-     * @return Liste der passenden Bücher
+     * @param q Search term for author
+     * @return List of matching books
      */
     @Override
     public List<Buch> sucheNachAutor(String q) {
@@ -43,10 +43,10 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Sucht Bücher nach Genre.
+     * Searches books by genre.
      *
-     * @param q Suchbegriff für Genre
-     * @return Liste der passenden Bücher
+     * @param q Search term for genre
+     * @return List of matching books
      */
     @Override
     public List<Buch> sucheNachGenre(String q) {
@@ -54,10 +54,10 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Sucht Bücher nach Verlag.
+     * Searches books by publisher.
      *
-     * @param q Suchbegriff für Verlag
-     * @return Liste der passenden Bücher
+     * @param q Search term for publisher
+     * @return List of matching books
      */
     @Override
     public List<Buch> sucheNachVerlag(String q) {
@@ -65,10 +65,10 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Gibt die Details eines bestimmten Buches zurück.
+     * Returns the details of a specific book.
      *
-     * @param id Buch-ID
-     * @return Buchobjekt oder null
+     * @param id Book ID
+     * @return Book object or null
      */
     @Override
     public Buch buchdetails(String id) {
@@ -76,10 +76,10 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Zeigt alle Rezensionen zu einem Buch an.
+     * Shows all reviews for a specific book.
      *
-     * @param id Buch-ID
-     * @return Liste der Rezensionen
+     * @param id Book ID
+     * @return List of reviews
      */
     @Override
     public List<Rezension> showRezensionen(String id) {
@@ -87,13 +87,14 @@ public class Controller implements ApplicationInterface {
     }
 
     /**
-     * Fügt eine neue Rezension zu einem Buch hinzu.
+     * Adds a new review to a book.
      *
-     * @param id Buch-ID
-     * @param r  Rezension, die hinzugefügt werden soll
+     * @param id Book ID
+     * @param r  Review to be added
      */
     @Override
     public void reviewHinzufuegen(String id, Rezension r) {
         katalog.reviewHinzufuegen(id, r);
     }
 }
+

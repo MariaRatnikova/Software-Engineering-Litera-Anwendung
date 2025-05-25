@@ -3,9 +3,9 @@
  *
  * ApplicationWindow.java
  * -----------------------
- * Zentrales Hauptfenster der Desktop-Applikation »Litera Book Catalogue«.
- * Über ein CardLayout werden hier die unterschiedlichen UI-Bildschirme
- * (Start-, Listen- und Detailansicht) verwaltet.
+ * Central main window of the desktop application »Litera Book Catalogue«.
+ * A CardLayout is used to manage the different UI screens
+ * (start view, list view, and details view).
  */
 
 import java.awt.CardLayout;
@@ -15,49 +15,49 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * Hauptfenster der Anwendung.
+ * Main window of the application.
  * <p>
- *  • verwaltet alle Screens als „Karten“ in einem {@link CardLayout}<br>
- *  • hält eine Referenz auf das {@code ApplicationInterface} zur Weitergabe
- *    an die einzelnen Panels
+ *  • manages all screens as "cards" in a {@link CardLayout}<br>
+ *  • holds a reference to the {@code ApplicationInterface} for passing it
+ *    to the individual panels
  */
 public final class ApplicationWindow extends JFrame {
 
-  /** Empfohlene Startgröße für eine Full-HD-Desktopansicht. */
+  /** Recommended startup size for a Full-HD desktop view. */
   private static final int WIDTH  = 1_440;
   private static final int HEIGHT = 900;
 
-  /** Name der Startkarte (muss mit Eintrag in {@link #createScreens} übereinstimmen). */
+  /** Name of the start card (must match entry in {@link #createScreens}). */
   private static final String CARD_START = "start";
 
   /**
-   * Konstruktor - erstellt Fenster, Screens und zeigt die Startkarte.
+   * Constructor – creates the window, screens and displays the start card.
    *
-   * @param controller zentrale Steuerschnittstelle der Anwendung
+   * @param controller central control interface of the application
    */
   public ApplicationWindow(final ApplicationInterface controller) {
     super("Litera Book Catalogue");
     setSize(WIDTH, HEIGHT);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    setLocationRelativeTo(null); // zentriert das Fenster
+    setLocationRelativeTo(null); // centers the window
 
-    /* --- CardLayout vorbereiten -------------------------------------- */
+    /* --- Prepare CardLayout ----------------------------------------- */
     final CardLayout cards = new CardLayout();
     final JPanel     root  = new JPanel(cards);
 
     createScreens(root, cards, controller);
 
     add(root);
-    cards.show(root, CARD_START); // erste Ansicht wählen
+    cards.show(root, CARD_START); // select first view
     setVisible(true);
   }
 
   /**
-   * Erzeugt und registriert alle UI-Screens im CardLayout.
+   * Creates and registers all UI screens in the CardLayout.
    *
-   * @param root       Container, der als „Kartenstapel“ dient
-   * @param cards      das zugehörige {@code CardLayout}
-   * @param controller zentrale Steuerschnittstelle
+   * @param root       Container serving as the "card stack"
+   * @param cards      the corresponding {@code CardLayout}
+   * @param controller central control interface
    */
   private static void createScreens(final JPanel root,
                                     final CardLayout cards,
@@ -68,13 +68,13 @@ public final class ApplicationWindow extends JFrame {
   }
 
   /* ------------------------------------------------------------------ */
-  /* Einstiegspunkt                                                    */
+  /* Entry point                                                       */
   /* ------------------------------------------------------------------ */
 
   /**
-   * Main-Methode - startet die Swing-Anwendung thread-sicher.
+   * Main method – launches the Swing application in a thread-safe way.
    *
-   * @param args Kommandozeilen-Argumente (werden nicht ausgewertet)
+   * @param args Command-line arguments (not evaluated)
    */
   public static void main(final String[] args) {
     SwingUtilities.invokeLater(() -> {

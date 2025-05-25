@@ -1,8 +1,7 @@
 /*
  * BookListPanel.java
  * --------------------------------------------------------------------
- * Anzeige- und Suchansicht für den „Litera Book Catalog“.
- *
+ * Display and search view for the "Litera Book Catalog".
  */
 
 import java.awt.BorderLayout;
@@ -33,13 +32,13 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 /**
- * Liste aller Bücher mit Such- und Filtermöglichkeiten.
+ * List of all books with search and filter options.
  */
 public final class BookListPanel extends JPanel {
 
-    /* ---------------------------------------------------------------
-     * Konstanten / Farben / Abmessungen
-     * -------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+ * Constants / Colors / Dimensions
+ * -------------------------------------------------------------- */
     private static final Color COLOR_BG_DARK   = new Color(8, 25, 40);
     private static final Color COLOR_BG_TOP    = new Color(52, 121, 122);
     private static final Color COLOR_MINT      = new Color(166, 221, 211);
@@ -51,24 +50,23 @@ public final class BookListPanel extends JPanel {
     private static final Dimension SEARCH_SIZE = new Dimension(550, 40);
     private static final Dimension BTN_SIZE    = new Dimension(100, 40);
     private static final Dimension ROW_SIZE    = new Dimension(980, 70);
-
-    /* ---------------------------------------------------------------
-     * Referenzen
-     * -------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * References
+ * -------------------------------------------------------------- */
     private final ApplicationInterface controller;
     private final CardLayout           navigator;
     private final JPanel               parent;
 
-    /* ---------------------------------------------------------------
-     * UI-Felder
-     * -------------------------------------------------------------- */
+ /* ---------------------------------------------------------------
+ * UI fields
+ * -------------------------------------------------------------- */
     private JComboBox<String> filterBox;
     private JTextField        searchField;
     private JPanel            resultsPanel;
 
-    /* ---------------------------------------------------------------
-     * Konstruktor
-     * -------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * Constructor
+ * -------------------------------------------------------------- */
     public BookListPanel(CardLayout navigator, JPanel parent,
             ApplicationInterface controller) {
 
@@ -85,22 +83,23 @@ public final class BookListPanel extends JPanel {
         print(controller.buchsuche(""));  // Start: alle Bücher
     }
 
-    /* ---------------------------------------------------------------
-     * Header: Logo • Filter • Suche
-     * -------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+ * Header: Logo • Filter • Search
+ * -------------------------------------------------------------- */
     private void buildHeader() {
-        /* Top-Bar ---------------------------------------------------- */
+      
+/* Top bar ---------------------------------------------------- */
         JPanel topBar = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         topBar.setPreferredSize(TOP_SIZE);
         topBar.setBackground(COLOR_BG_TOP);
-
-        /* Logo ------------------------------------------------------- */
+/* Logo ------------------------------------------------------- */
         ImageIcon logoRaw = new ImageIcon("src/main/java/images/LogoText.png");
         Image     logoImg = logoRaw.getImage()
                                    .getScaledInstance(110, 120, Image.SCALE_SMOOTH);
         topBar.add(new JLabel(new ImageIcon(logoImg)));
 
-        /* Filter-Drop-Down ------------------------------------------ */
+/* Filter drop-down ------------------------------------------ */
+
         filterBox = new JComboBox<>(new String[] {
             "Title", "Author", "Publisher", "Genre"
         });
@@ -111,13 +110,13 @@ public final class BookListPanel extends JPanel {
         filterBox.setBorder(BorderFactory.createEmptyBorder(4, 14, 4, 14));
         topBar.add(filterBox);
 
-        /* Suchfeld --------------------------------------------------- */
+/* Search field --------------------------------------------------- */
         searchField = new JTextField();
         searchField.setPreferredSize(SEARCH_SIZE);
         searchField.setFont(new Font("Arial", Font.PLAIN, 18));
         topBar.add(searchField);
+/* Search button ------------------------------------------------ */
 
-        /* Such-Button ------------------------------------------------ */
         JButton btnSearch = new JButton("Search");
         btnSearch.setPreferredSize(BTN_SIZE);
         btnSearch.setFont(new Font("Arial", Font.BOLD, 16));
@@ -127,18 +126,20 @@ public final class BookListPanel extends JPanel {
         btnSearch.setOpaque(false);
         topBar.add(btnSearch);
 
-        /* Gemeinsame Aktion ----------------------------------------- */
+/* Common search action ----------------------------------------- */
+
         ActionListener searchAction = evt -> refresh();
         btnSearch.addActionListener(searchAction);
         searchField.addActionListener(searchAction);
 
-        /* Überschrift „Books:“ --------------------------------------- */
+      /* Heading “Books:” --------------------------------------- */
+
         JLabel booksLbl = new JLabel("Books:");
         booksLbl.setFont(new Font("Arial", Font.BOLD, 26));
         booksLbl.setForeground(Color.WHITE);
         booksLbl.setBorder(BorderFactory.createEmptyBorder(18, 0, 12, 0));
 
-        /* Header-Container ------------------------------------------ */
+      /* Header container ------------------------------------------ */
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         header.setBackground(COLOR_BG_DARK);
@@ -149,8 +150,9 @@ public final class BookListPanel extends JPanel {
     }
 
     /* ---------------------------------------------------------------
-     * Scrollbarer Ergebnisbereich
-     * -------------------------------------------------------------- */
+ * Scrollable result area
+ * -------------------------------------------------------------- */
+
     private void buildResultArea() {
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
@@ -164,17 +166,19 @@ public final class BookListPanel extends JPanel {
         );
         scroll.setBorder(null);
 
-        /* Scrollgeschwindigkeit anpassen */
+       /* Adjust scroll speed */
         JScrollBar vBar = scroll.getVerticalScrollBar();
-        vBar.setUnitIncrement(35);   // Mausrad
-        vBar.setBlockIncrement(250); // Bild auf / ab
+        vBar.setUnitIncrement(35);   
+        vBar.setBlockIncrement(250); 
 
         add(scroll, BorderLayout.CENTER);
     }
 
-    /* ---------------------------------------------------------------
-     * Suche ausführen
-     * -------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+ * Execute search
+ * -------------------------------------------------------------- */
+
+
     private void refresh() {
         String query    = searchField.getText().trim();
         String category = (String) filterBox.getSelectedItem();
@@ -198,9 +202,10 @@ public final class BookListPanel extends JPanel {
         print(list);
     }
 
-    /* ---------------------------------------------------------------
-     * Ergebnisliste anzeigen
-     * -------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * Display result list
+ * -------------------------------------------------------------- */
+
     private void print(List<Buch> books) {
         resultsPanel.removeAll();
 
@@ -220,9 +225,11 @@ public final class BookListPanel extends JPanel {
         resultsPanel.repaint();
     }
 
-    /* ---------------------------------------------------------------
-     * Einzelne Buchzeile erstellen
-     * -------------------------------------------------------------- */
+   
+/* ---------------------------------------------------------------
+ * Create individual book row
+ * -------------------------------------------------------------- */
+
     private JPanel createRow(Buch book) {
         JPanel row = new JPanel(new BorderLayout());
         row.setPreferredSize(ROW_SIZE);
@@ -245,7 +252,7 @@ public final class BookListPanel extends JPanel {
 
         row.add(text, BorderLayout.CENTER);
 
-        /* Klick → Details ------------------------------------------- */
+       /* Click → Show book details ---------------------------------- */
         row.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         row.addMouseListener(new MouseAdapter() {
             @Override

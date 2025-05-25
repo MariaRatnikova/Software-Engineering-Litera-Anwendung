@@ -1,51 +1,51 @@
 /**
- * Modellklasse für einen Verlag (Publisher).
- * Ein Verlag hat aktuell nur einen Namen, kann aber bei Bedarf erweitert werden 
- * (z. B. Adresse, Webseite).
+ * Model class for a publisher.
+ * A publisher currently only has a name, but can be extended if needed 
+ * (e.g., address, website).
  */
 public class Verlag {
 
-    /** Name des Verlags (z. B. „Penguin Books“) */
+    /** Name of the publisher (e.g., "Penguin Books") */
     private String name;
 
     /**
-     * No-Arg-Konstruktor – erforderlich für Bibliotheken wie Jackson.
+     * No-argument constructor – required by libraries like Jackson.
      */
     public Verlag() {
     }
 
     /**
-     * Konstruktor mit Name.
+     * Constructor with name.
      *
-     * @param name Name des Verlags
+     * @param name Name of the publisher
      */
     public Verlag(String name) {
         this.name = name;
     }
 
     /**
-     * Gibt den Namen des Verlags zurück.
+     * Returns the name of the publisher.
      *
-     * @return Name des Verlags
+     * @return Name of the publisher
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Setzt den Namen des Verlags.
+     * Sets the name of the publisher.
      *
-     * @param name Neuer Name
+     * @param name New name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Gibt eine textuelle Darstellung des Verlags zurück.
-     * Nützlich für Debugging und Logging.
+     * Returns a textual representation of the publisher.
+     * Useful for debugging and logging.
      *
-     * @return String-Repräsentation des Verlags
+     * @return String representation of the publisher
      */
     @Override
     public String toString() {

@@ -1,77 +1,77 @@
 /**
- * Repräsentiert ein Genre eines Buches, z. B. „Fantasy“ oder „Krimi“,
- * zusammen mit einer kurzen Beschreibung.
+ * Represents a genre of a book, e.g., "Fantasy" or "Crime",
+ * along with a short description.
  */
 public class Genre {
 
-    // Name des Genres (z. B. „Fantasy“)
+    // Name of the genre (e.g., "Fantasy")
     private String name;
 
-    // Beschreibung des Genres (z. B. „Magische Welten und epische Abenteuer“)
-    private String beschreibung;
+    // Description of the genre (e.g., "Magical worlds and epic adventures")
+    private String description;
 
     /**
-     * No-Argument-Konstruktor – notwendig für Frameworks wie Jackson,
-     * die Objekte automatisch aus JSON-Daten erzeugen.
+     * No-argument constructor – required by frameworks like Jackson
+     * that create objects automatically from JSON data.
      */
     public Genre() {
     }
 
     /**
-     * Konstruktor mit Parametern zum direkten Setzen von Name und Beschreibung.
+     * Constructor with parameters for directly setting name and description.
      *
-     * @param name         Name des Genres
-     * @param beschreibung Beschreibung des Genres
+     * @param name        Name of the genre
+     * @param description Description of the genre
      */
-    public Genre(String name, String beschreibung) {
+    public Genre(String name, String description) {
         this.name = name;
-        this.beschreibung = beschreibung;
+        this.description = description;
     }
 
     /**
-     * Gibt den Namen des Genres zurück.
+     * Returns the name of the genre.
      *
-     * @return Name des Genres
+     * @return Name of the genre
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Setzt den Namen des Genres.
+     * Sets the name of the genre.
      *
-     * @param name Neuer Name
+     * @param name New name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Gibt die Beschreibung des Genres zurück.
+     * Returns the description of the genre.
      *
-     * @return Beschreibung des Genres
+     * @return Description of the genre
      */
-    public String getBeschreibung() {
-        return beschreibung;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Setzt die Beschreibung des Genres.
+     * Sets the description of the genre.
      *
-     * @param beschreibung Neue Beschreibung
+     * @param description New description
      */
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * Gibt eine textuelle Darstellung des Genres zurück,
-     * z. B. „Fantasy: Magische Welten und epische Abenteuer“.
+     * Returns a textual representation of the genre,
+     * e.g., "Fantasy: Magical worlds and epic adventures".
      *
-     * @return String-Repräsentation des Genres
+     * @return String representation of the genre
      */
     @Override
     public String toString() {
-        return name + ": " + beschreibung;
+        return name + ": " + description;
     }
 }
