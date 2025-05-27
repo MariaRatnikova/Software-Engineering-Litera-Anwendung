@@ -81,6 +81,32 @@ public final class StartPanel extends JPanel {
         startBtn.setMaximumSize(BTN_SIZE);
         startBtn.setMinimumSize(BTN_SIZE);
 
+        JButton aboutBtn = new JButton("About");
+        aboutBtn.setFont(new Font("Arial", Font.PLAIN, 24));
+        aboutBtn.setBackground(COLOR_ACCENT);
+        aboutBtn.setForeground(Color.WHITE);
+        aboutBtn.setOpaque(true);
+        aboutBtn.setContentAreaFilled(false);
+        aboutBtn.setBorderPainted(false);
+        aboutBtn.setFocusPainted(false);
+        aboutBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        aboutBtn.setPreferredSize(new Dimension(200, 50));
+        aboutBtn.setMaximumSize(new Dimension(200, 50));
+        aboutBtn.setMinimumSize(new Dimension(200, 50));
+
+aboutBtn.addActionListener(e -> {
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        """
+        Litera is a modern company specializing in digital book catalogs.
+        Our mission is to help readers explore, discover, and review books easily.
+        This app is designed for students, teachers, libraries, and book lovers.
+        """,
+        "About Litera",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+});
+
         /* ---- Action: switch to book list ---------------------------- */
         startBtn.addActionListener(evt -> layout.show(parent, "list"));
 
@@ -94,6 +120,8 @@ public final class StartPanel extends JPanel {
         center.add(Box.createRigidArea(new Dimension(0, 30)));
         center.add(startBtn);
         center.add(Box.createVerticalGlue());
+        center.add(Box.createRigidArea(new Dimension(0, 15)));
+        center.add(aboutBtn);
 
         add(center, BorderLayout.CENTER);
     }
