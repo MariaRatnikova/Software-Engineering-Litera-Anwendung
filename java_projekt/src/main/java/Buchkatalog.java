@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -136,5 +137,50 @@ public class Buchkatalog {
         return storage.ladeRezensionen().stream()
             .filter(r -> id.equals(r.getBookId()))
             .collect(Collectors.toList());
+    }
+    
+    /**
+     * Finds similar books based on genre matches.
+     * A book is considered similar if it shares at least 3 genres with the given book.
+     *
+     * @param buch The reference book to find similar books for
+     * @return List of books that are considered similar (at least 3 matching genres)
+     */
+    public List<Buch> aehnlich(Buch buch) {
+        // Check if the given book is valid
+        if (buch == null || buch.getGenres() == null || buch.getGenres().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Genres of the given book (lowercase for case-insensitive comparison)
+        List<String> buchGenres = buch.getGenres().stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+
+        // Minimum number of matching genres for "similarity"
+        final int MIN_MATCHING_GENRES = 3;
+
+        // Search for similar books in the catalog
+        return buecher.stream()
+                // Exclude the reference book itself
+                .filter(b -> !b.getBookId().equals(buch.getBookId()))
+                // Only consider books with genres
+                .filter(b -> b.getGenres() != null && !b.getGenres().isEmpty())
+                // Calculate number of matching genres
+                .filter(b -> {
+                    // Genres of the book to compare (lowercase)
+                    List<String> otherGenres = b.getGenres().stream()
+                            .map(String::toLowerCase)
+                            .collect(Collectors.toList());
+                    
+                    // Count matching genres
+                    long matchingGenres = buchGenres.stream()
+                            .filter(otherGenres::contains)
+                            .count();
+                    
+                    // Book is similar if at least MIN_MATCHING_GENRES match
+                    return matchingGenres >= MIN_MATCHING_GENRES;
+                })
+                .collect(Collectors.toList());
     }
 }
