@@ -33,6 +33,10 @@ public class Buch {
 
     // Description of the book (e.g., for the detail view)
     private String description;
+    // Cover image path for the book
+        @JsonProperty("image")
+        private String image;
+
 
     /**
      * Default constructor (required by Jackson).
@@ -89,6 +93,15 @@ public class Buch {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getImage() {
+    return image;
+    }
+
+    public void setImage(String image) {
+    this.image = image;
+    }
+
 
     /**
      * Returns a compact text representation of the book object.
