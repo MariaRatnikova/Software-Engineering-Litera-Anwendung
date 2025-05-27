@@ -1,9 +1,3 @@
-/*
- * StartPanel.java
- * ---------------------------------------------------------------------
- * Welcome/start screen of the desktop application "Litera Book Catalog".
- */
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -17,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -95,15 +90,17 @@ public final class StartPanel extends JPanel {
         aboutBtn.setMinimumSize(new Dimension(200, 50));
 
 aboutBtn.addActionListener(e -> {
-    javax.swing.JOptionPane.showMessageDialog(
+    String message = String.join("\n",
+    "Litera is a modern company specializing in digital book catalogs.",
+    "Our mission is to help readers explore, discover, and review books easily.",
+    "This app is designed for students, teachers, libraries, and book lovers."
+);
+
+    JOptionPane.showMessageDialog(
         this,
-        """
-        Litera is a modern company specializing in digital book catalogs.
-        Our mission is to help readers explore, discover, and review books easily.
-        This app is designed for students, teachers, libraries, and book lovers.
-        """,
+        message,
         "About Litera",
-        javax.swing.JOptionPane.INFORMATION_MESSAGE
+        JOptionPane.INFORMATION_MESSAGE
     );
 });
 
