@@ -1,3 +1,11 @@
+/*
+ * StartPanel.java
+ * -------------------------------------------------------------------
+ * Landing screen that shows the Litera logo, a title, a subtitle,
+ * and two primary navigation buttons (“Start” / “About”).
+ *
+ */
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -11,115 +19,108 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * Start/welcome screen.<br>
- * Displays logo, title, subtitle, and a button that switches to the book list.
+ * First screen that shows the logo, title and the two main buttons.
  */
 public final class StartPanel extends JPanel {
 
-    /* ------------------------------------------------------------------
-     * Constants – Colors / Sizes
-     * ----------------------------------------------------------------- */
-    private static final Color COLOR_BACKGROUND = new Color(7, 31, 45);
-    private static final Color COLOR_ACCENT     = new Color(52, 121, 122);
+    /*--------------------------------------------------------------------
+     * Constants
+     *------------------------------------------------------------------*/
+    private static final Color      COLOR_BACKGROUND = new Color(7, 31, 45);
+    private static final Color      COLOR_ACCENT     = new Color(52, 121, 122);
+    private static final Dimension  BUTTON_SIZE      = new Dimension(295, 75);
 
-    private static final Dimension BTN_SIZE = new Dimension(295, 75);
-
+    /*--------------------------------------------------------------------
+     * Constructor
+     *------------------------------------------------------------------*/
     /**
-     * Creates the start screen.
+     * Creates the start screen and wires the navigation callbacks.
      *
-     * @param layout  shared {@link CardLayout}
-     * @param parent  parent panel containing the {@code CardLayout}
+     * @param layout the shared {@link CardLayout} used for navigation
+     * @param parent the parent panel containing the {@code CardLayout}
      */
     public StartPanel(final CardLayout layout, final JPanel parent) {
         super(new BorderLayout());
         setBackground(COLOR_BACKGROUND);
 
-        /* ---------- Central vertical panel ------------------------ */
-        JPanel center = new JPanel();
-        center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
-        center.setOpaque(false); // transparent background
+        /* --- centre column ----------------------------------------- */
+        JPanel column = new JPanel();
+        column.setOpaque(false);
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
 
-        /* --------------------------- Logo ----------------------------- */
-        ImageIcon rawLogo  = new ImageIcon("src/main/java/images/Logo Weiss.png");
-        Image     imgLogo  = rawLogo.getImage()
-                                    .getScaledInstance(226, 161, Image.SCALE_SMOOTH);
-        JLabel    logoLbl  = new JLabel(new ImageIcon(imgLogo));
-        logoLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        /* --- logo --------------------------------------------------- */
+        ImageIcon rawLogo = new ImageIcon("src/main/java/images/Logo Weiss.png");
+        Image     imgLogo = rawLogo.getImage()
+                                   .getScaledInstance(226, 161, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(imgLogo));
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* ------------------------ Main title -------------------------- */
-        JLabel titleLbl = new JLabel("Litera Book Catalog");
-        titleLbl.setFont(new Font("Arial", Font.BOLD, 72));
-        titleLbl.setForeground(Color.WHITE);
-        titleLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        /* --- titles ------------------------------------------------- */
+        JLabel titleLabel = new JLabel("Litera Book Catalog");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 72));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* ------------------------ Subtitle ---------------------------- */
-        JLabel subtitleLbl = new JLabel("Explore. Discover. Read.");
-        subtitleLbl.setFont(new Font("Arial", Font.PLAIN, 32));
-        subtitleLbl.setForeground(Color.WHITE);
-        subtitleLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel subtitleLabel = new JLabel("Explore. Discover. Read.");
+        subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 32));
+        subtitleLabel.setForeground(Color.WHITE);
+        subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* -------------------------- Button ---------------------------- */
-        JButton startBtn = new JButton("Start");
-        startBtn.setFont(new Font("Arial", Font.PLAIN, 32));
-        startBtn.setBackground(COLOR_ACCENT);
-        startBtn.setForeground(Color.WHITE);
-        startBtn.setOpaque(true);
-        startBtn.setContentAreaFilled(false); // no default Swing background
-        startBtn.setBorderPainted(false);
-        startBtn.setFocusPainted(false);
-        startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startBtn.setPreferredSize(BTN_SIZE);
-        startBtn.setMaximumSize(BTN_SIZE);
-        startBtn.setMinimumSize(BTN_SIZE);
+        /* --- buttons ------------------------------------------------ */
+        JButton startButton = new JButton("Start");
+        startButton.setFont(new Font("Arial", Font.PLAIN, 32));
+        styleButton(startButton, BUTTON_SIZE);
+        startButton.addActionListener(e -> layout.show(parent, "list"));
 
-        JButton aboutBtn = new JButton("About");
-        aboutBtn.setFont(new Font("Arial", Font.PLAIN, 24));
-        aboutBtn.setBackground(COLOR_ACCENT);
-        aboutBtn.setForeground(Color.WHITE);
-        aboutBtn.setOpaque(true);
-        aboutBtn.setContentAreaFilled(false);
-        aboutBtn.setBorderPainted(false);
-        aboutBtn.setFocusPainted(false);
-        aboutBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        aboutBtn.setPreferredSize(new Dimension(200, 50));
-        aboutBtn.setMaximumSize(new Dimension(200, 50));
-        aboutBtn.setMinimumSize(new Dimension(200, 50));
+        JButton aboutButton = new JButton("About");
+        aboutButton.setFont(new Font("Arial", Font.PLAIN, 32));
+        styleButton(aboutButton, BUTTON_SIZE);
+        aboutButton.addActionListener(e -> layout.show(parent, "about"));
 
-aboutBtn.addActionListener(e -> {
-    String message = String.join("\n",
-    "Litera is a modern company specializing in digital book catalogs.",
-    "Our mission is to help readers explore, discover, and review books easily.",
-    "This app is designed for students, teachers, libraries, and book lovers."
-);
+        /* --- compose ----------------------------------------------- */
+        column.add(Box.createVerticalGlue());
+        column.add(logoLabel);
+        column.add(Box.createRigidArea(new Dimension(0, 20)));
+        column.add(titleLabel);
+        column.add(Box.createRigidArea(new Dimension(0, 10)));
+        column.add(subtitleLabel);
+        column.add(Box.createRigidArea(new Dimension(0, 30)));
+        column.add(startButton);
+        column.add(Box.createRigidArea(new Dimension(0, 20)));
+        column.add(aboutButton);
+        column.add(Box.createVerticalGlue());
 
-    JOptionPane.showMessageDialog(
-        this,
-        message,
-        "About Litera",
-        JOptionPane.INFORMATION_MESSAGE
-    );
-});
+        add(column, BorderLayout.CENTER);
+    }
 
-        /* ---- Action: switch to book list ---------------------------- */
-        startBtn.addActionListener(evt -> layout.show(parent, "list"));
+    /*--------------------------------------------------------------------
+     * Helper methods
+     *------------------------------------------------------------------*/
+    /**
+     * Applies consistent styling to a navigation button.
+     *
+     * @param button the button to style
+     * @param size   the preferred/fixed size
+     */
+    private static void styleButton(final JButton button,
+                                    final Dimension size) {
 
-        /* ---- Arrange components ------------------------------------- */
-        center.add(Box.createVerticalGlue());
-        center.add(logoLbl);
-        center.add(Box.createRigidArea(new Dimension(0, 20)));
-        center.add(titleLbl);
-        center.add(Box.createRigidArea(new Dimension(0, 10)));
-        center.add(subtitleLbl);
-        center.add(Box.createRigidArea(new Dimension(0, 30)));
-        center.add(startBtn);
-        center.add(Box.createVerticalGlue());
-        center.add(Box.createRigidArea(new Dimension(0, 15)));
-        center.add(aboutBtn);
-
-        add(center, BorderLayout.CENTER);
+        button.setBackground(COLOR_ACCENT);
+        button.setForeground(Color.WHITE);
+        button.setOpaque(true);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setPreferredSize(size);
+        button.setMaximumSize(size);
+        button.setMinimumSize(size);
     }
 }
+
+
+
+
+

@@ -64,6 +64,7 @@ public final class ApplicationWindow extends JFrame {
                                     final ApplicationInterface controller) {
     root.add(new StartPanel(cards, root),                   CARD_START);
     root.add(new BookListPanel(cards, root, controller),    "list");
+    root.add(new AboutPanel(cards, root),   "about"); 
     root.add(new BookDetails(cards, root, controller),      "details");
   }
 

@@ -76,4 +76,5 @@ public interface ApplicationInterface {
      * @param rezension New {@link Rezension} object
      */
     void reviewHinzufuegen(String id, Rezension rezension);
+    List<Buch> aehnlich(String bookId);
 }

@@ -45,11 +45,11 @@ public final class BookListPanel extends JPanel {
     private static final Color COLOR_ROW_BG    = new Color(19, 41, 59);
     private static final Color COLOR_ROW_TEXT  = new Color(173, 199, 208);
 
-    private static final Dimension TOP_SIZE    = new Dimension(1440, 140);
+    private static final Dimension TOP_SIZE    = new Dimension(1440, 160);
     private static final Dimension FILTER_SIZE = new Dimension(180, 40);
     private static final Dimension SEARCH_SIZE = new Dimension(550, 40);
     private static final Dimension BTN_SIZE    = new Dimension(100, 40);
-    private static final Dimension ROW_SIZE    = new Dimension(980, 70);
+    private static final Dimension ROW_SIZE    = new Dimension(980, 90);
 /* ---------------------------------------------------------------
  * References
  * -------------------------------------------------------------- */
@@ -218,7 +218,7 @@ public final class BookListPanel extends JPanel {
 
         for (Buch b : books) {
             resultsPanel.add(createRow(b));
-            resultsPanel.add(Box.createVerticalStrut(12));
+            resultsPanel.add(Box.createVerticalStrut(25));
         }
 
         resultsPanel.revalidate();
@@ -238,11 +238,12 @@ public final class BookListPanel extends JPanel {
         row.setBorder(BorderFactory.createEmptyBorder(12, 18, 12, 18));
 
         JLabel titleLbl = new JLabel(book.getTitle());
-        titleLbl.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLbl.setFont(new Font("Arial", Font.BOLD, 24));
         titleLbl.setForeground(Color.WHITE);
 
         JLabel authorLbl = new JLabel(book.getAuthor());
         authorLbl.setForeground(COLOR_ROW_TEXT);
+        authorLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 
         JPanel text = new JPanel();
         text.setOpaque(false);

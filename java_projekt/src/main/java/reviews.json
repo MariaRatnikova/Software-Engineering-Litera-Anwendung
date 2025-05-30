@@ -1,41 +1,56 @@
 [ {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746485532338,
   "bewertung" : 4,
-  "kommentar" : "Sehr Gut",
-  "datum" : 1746485532338
+  "kommentar" : "Sehr Gut"
 }, {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746532363916,
   "bewertung" : 1,
-  "kommentar" : "Nicht gut",
-  "datum" : 1746532363916
+  "kommentar" : "Nicht gut"
 }, {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746573011035,
   "bewertung" : 4,
-  "kommentar" : "Collins delivers a compelling story with The Hunger Games. The concept of a televised death game is chilling but brilliantly executed. Katniss is a fascinating character—flawed but brave—and the relationships are believable. Some parts felt rushed, and I wish there had been more world-building outside the Games. Still, the suspense and emotion kept me hooked. It’s a powerful critique of society, entertainment, and inequality wrapped in an exciting young adult narrative. I’d recommend it to teens and adults alike.",
-  "datum" : 1746573011035
+  "kommentar" : "Collins delivers a compelling story with The Hunger Games. The concept of a televised death game is chilling but brilliantly executed. Katniss is a fascinating character—flawed but brave—and the relationships are believable. Some parts felt rushed, and I wish there had been more world-building outside the Games. Still, the suspense and emotion kept me hooked. It’s a powerful critique of society, entertainment, and inequality wrapped in an exciting young adult narrative. I’d recommend it to teens and adults alike."
 }, {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746574755645,
   "bewertung" : 5,
-  "kommentar" : "Gut",
-  "datum" : 1746574755645
+  "kommentar" : "Gut"
 }, {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746713300507,
   "bewertung" : 5,
-  "kommentar" : "Sehr gut",
-  "datum" : 1746713300507
+  "kommentar" : "Sehr gut"
 }, {
   "bookId" : "41865.Twilight",
+  "datum" : 1746734033682,
   "bewertung" : 5,
-  "kommentar" : "Perfekt",
-  "datum" : 1746734033682
+  "kommentar" : "Perfekt"
 }, {
   "bookId" : "41865.Twilight",
+  "datum" : 1746734054974,
   "bewertung" : 2,
-  "kommentar" : "Nicht gut",
-  "datum" : 1746734054974
+  "kommentar" : "Nicht gut"
 }, {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1746766081015,
   "bewertung" : 1,
-  "kommentar" : "",
-  "datum" : 1746766081015
+  "kommentar" : ""
+}, {
+  "bookId" : "3.Harry_Potter_and_the_Sorcerer_s_Stone",
+  "datum" : 1748551732195,
+  "bewertung" : 3,
+  "kommentar" : "Not good"
+}, {
+  "bookId" : "3.Harry_Potter_and_the_Sorcerer_s_Stone",
+  "datum" : 1748551755364,
+  "bewertung" : 5,
+  "kommentar" : "Good"
+}, {
+  "bookId" : "11870085-the-fault-in-our-stars",
+  "datum" : 1748555200740,
+  "bewertung" : 4,
+  "kommentar" : "Good"
 } ]
