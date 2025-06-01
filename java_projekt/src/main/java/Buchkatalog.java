@@ -158,7 +158,7 @@ public class Buchkatalog {
                 .collect(Collectors.toList());
 
         // Minimum number of matching genres for "similarity"
-        final int MIN_MATCHING_GENRES = 3;
+        final int MIN_MATCHING_GENRES = 7;
 
         // Search for similar books in the catalog
         return buecher.stream()
