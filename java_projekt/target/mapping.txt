@@ -1,4 +1,25 @@
-ApplicationInterface -> a:
+AboutPanel -> a:
+    java.awt.Color COLOR_BG -> a
+    java.awt.Color COLOR_ACCENT -> b
+    java.awt.Color COLOR_BUTTON_BG -> c
+    java.awt.Font UI_FONT -> d
+    java.awt.CardLayout navigator -> e
+    javax.swing.JPanel root -> f
+    void <init>(java.awt.CardLayout,javax.swing.JPanel) -> <init>
+    void goBack() -> a
+    javax.swing.JComponent buildHeader() -> b
+    javax.swing.JScrollPane buildScrollPane() -> c
+    javax.swing.JComponent buildContentColumn() -> d
+    javax.swing.JLabel title(java.lang.String) -> a
+    javax.swing.JLabel section(java.lang.String) -> b
+    javax.swing.JLabel pair(java.lang.String,java.lang.String) -> a
+    javax.swing.JLabel bullet(java.lang.String) -> c
+    javax.swing.JLabel wrap(java.lang.String) -> d
+    javax.swing.JLabel makeLabel(java.lang.String,int,int,java.awt.Color) -> a
+    java.awt.Component vGap(int) -> a
+    void lambda$buildHeader$0(java.awt.event.ActionEvent) -> a
+    void <clinit>() -> <clinit>
+ApplicationInterface -> b:
     java.util.List buchsuche(java.lang.String) -> a
     java.util.List sucheNachAutor(java.lang.String) -> b
     java.util.List sucheNachGenre(java.lang.String) -> c
@@ -10,11 +31,11 @@ ApplicationWindow -> ApplicationWindow:
     void createScreens(javax.swing.JPanel,java.awt.CardLayout,ApplicationInterface) -> a
     void main(java.lang.String[]) -> main
     void lambda$main$0() -> a
-BookDetails -> b:
+BookDetails -> c:
     java.awt.Color COLOR_BG -> a
     java.awt.Color COLOR_ACCENT -> b
     java.awt.Color COLOR_CARD_BG -> c
-    java.awt.Color COLOR_BUTTON_FG -> d
+    java.awt.Color COLOR_BTN_FG -> d
     java.awt.CardLayout navigator -> e
     javax.swing.JPanel parent -> f
     ApplicationInterface controller -> g
@@ -24,20 +45,24 @@ BookDetails -> b:
     javax.swing.JLabel publLabel -> k
     javax.swing.JLabel genreLabel -> l
     javax.swing.JTextArea descArea -> m
-    javax.swing.JPanel reviewListPanel -> n
-    javax.swing.JScrollPane reviewPane -> o
+    javax.swing.JLabel coverLabel -> n
+    javax.swing.JPanel reviewList -> o
+    javax.swing.JScrollPane reviewPane -> p
+    SimilarBooks similarBooks -> q
+    java.lang.String ACCENT_HEX -> r
     void <init>(java.awt.CardLayout,javax.swing.JPanel,ApplicationInterface) -> <init>
     void loadReviews() -> a
-    javax.swing.JPanel render(Rezension) -> a
+    javax.swing.JPanel renderReview(Rezension) -> a
     void openAddDialog(Buch) -> a
-    javax.swing.JLabel label(java.lang.String,int,int,java.awt.Color) -> a
-    javax.swing.JTextArea descriptionArea() -> b
-    javax.swing.JButton textButton(java.lang.String) -> a
+    javax.swing.JLabel createLabel(java.lang.String,int,int,java.awt.Color) -> a
+    javax.swing.JTextArea createTextArea() -> b
+    javax.swing.JButton createButton(java.lang.String) -> a
     java.lang.String starLine(int) -> a
+    java.lang.String green(java.lang.String) -> b
     void lambda$new$1(java.awt.event.ActionEvent) -> a
-    void lambda$new$0(java.awt.CardLayout,javax.swing.JPanel,java.awt.event.ActionEvent) -> a
+    void lambda$new$0(java.awt.event.ActionEvent) -> b
     void <clinit>() -> <clinit>
-BookListPanel -> c:
+BookListPanel -> d:
     java.awt.Color COLOR_BG_DARK -> a
     java.awt.Color COLOR_BG_TOP -> b
     java.awt.Color COLOR_MINT -> c
@@ -62,11 +87,11 @@ BookListPanel -> c:
     javax.swing.JPanel createRow(Buch) -> a
     void lambda$buildHeader$0(java.awt.event.ActionEvent) -> a
     void <clinit>() -> <clinit>
-BookListPanel$1 -> d:
+BookListPanel$1 -> e:
     Buch val$book -> a
     BookListPanel this$0 -> b
     void <init>(BookListPanel,Buch) -> <init>
-Buch -> e:
+Buch -> f:
     java.lang.String bookId -> a
     java.lang.String title -> b
     java.lang.String author -> c
@@ -78,7 +103,7 @@ Buch -> e:
     java.lang.String getAuthor() -> c
     java.lang.String getPublisher() -> d
     java.util.List getGenres() -> e
-Buchkatalog -> f:
+Buchkatalog -> g:
     java.util.List buecher -> a
     StorageService storage -> b
     void <init>(StorageService) -> <init>
@@ -89,14 +114,14 @@ Buchkatalog -> f:
     Buch buchDetails(java.lang.String) -> e
     boolean reviewHinzufuegen(java.lang.String,Rezension) -> a
     java.util.List showRezensionen(java.lang.String) -> f
-    boolean lambda$showRezensionen$6(java.lang.String,Rezension) -> b
-    boolean lambda$buchDetails$5(java.lang.String,Buch) -> a
-    boolean lambda$sucheNachVerlag$4(java.lang.String,Buch) -> b
-    boolean lambda$sucheNachGenre$3(java.lang.String,Buch) -> c
-    boolean lambda$sucheNachGenre$2(java.lang.String,java.lang.String) -> a
-    boolean lambda$sucheNachAutor$1(java.lang.String,Buch) -> d
+    boolean lambda$showRezensionen$0(java.lang.String,Rezension) -> b
+    boolean lambda$buchDetails$0(java.lang.String,Buch) -> a
+    boolean lambda$sucheNachVerlag$0(java.lang.String,Buch) -> b
+    boolean lambda$sucheNachGenre$0(java.lang.String,Buch) -> c
+    boolean lambda$sucheNachGenre$1(java.lang.String,java.lang.String) -> a
+    boolean lambda$sucheNachAutor$0(java.lang.String,Buch) -> d
     boolean lambda$buchsuche$0(java.lang.String,Buch) -> e
-Controller -> g:
+Controller -> h:
     Buchkatalog katalog -> a
     void <init>(StorageService) -> <init>
     java.util.List buchsuche(java.lang.String) -> a
@@ -105,11 +130,11 @@ Controller -> g:
     java.util.List sucheNachVerlag(java.lang.String) -> d
     java.util.List showRezensionen(java.lang.String) -> e
     void reviewHinzufuegen(java.lang.String,Rezension) -> a
-Rezension -> h:
+Rezension -> i:
     java.lang.String bookId -> a
-    int bewertung -> b
-    java.lang.String kommentar -> c
-    java.util.Date datum -> d
+    int rating -> b
+    java.lang.String comment -> c
+    java.util.Date date -> d
     void <init>() -> <init>
     java.lang.String getBookId() -> a
     void setBookId(java.lang.String) -> a
@@ -118,22 +143,30 @@ Rezension -> h:
     java.lang.String getKommentar() -> c
     void setKommentar(java.lang.String) -> b
     void setDatum(java.util.Date) -> a
-StartPanel -> i:
+SimilarBooks -> j:
+    java.awt.Color COLOR_TEXT -> a
+    ApplicationInterface controller -> b
+    BookDetails bookDetails -> c
+    void <init>(ApplicationInterface,java.awt.CardLayout,javax.swing.JPanel,BookDetails) -> <init>
+    void <clinit>() -> <clinit>
+StartPanel -> k:
     java.awt.Color COLOR_BACKGROUND -> a
     java.awt.Color COLOR_ACCENT -> b
-    java.awt.Dimension BTN_SIZE -> c
+    java.awt.Dimension BUTTON_SIZE -> c
     void <init>(java.awt.CardLayout,javax.swing.JPanel) -> <init>
-    void lambda$new$0(java.awt.CardLayout,javax.swing.JPanel,java.awt.event.ActionEvent) -> a
+    void styleButton(javax.swing.JButton,java.awt.Dimension) -> a
+    void lambda$new$1(java.awt.CardLayout,javax.swing.JPanel,java.awt.event.ActionEvent) -> a
+    void lambda$new$0(java.awt.CardLayout,javax.swing.JPanel,java.awt.event.ActionEvent) -> b
     void <clinit>() -> <clinit>
-StorageService -> j:
+StorageService -> l:
     com.fasterxml.jackson.databind.ObjectMapper objectMapper -> a
     void <init>() -> <init>
     java.util.List ladeBuecher() -> a
     java.util.List ladeRezensionen() -> b
     void speichereRezension(Rezension) -> a
-StorageService$1 -> k:
+StorageService$1 -> m:
     StorageService this$0 -> a
     void <init>(StorageService) -> <init>
-StorageService$2 -> l:
+StorageService$2 -> n:
     StorageService this$0 -> a
     void <init>(StorageService) -> <init>

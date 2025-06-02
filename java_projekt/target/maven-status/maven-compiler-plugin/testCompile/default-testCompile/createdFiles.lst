@@ -1,3 +1,9 @@
+AehnlicheBuecherBeispiel_Standalone$Rezension.class
+AehnlicheBuecherBeispiel_Standalone$TestStorageService.class
+AehnlicheBuecherBeispiel_Standalone$Buchkatalog.class
+AehnlicheBuecherBeispiel_Standalone$Buch.class
 StorageServiceTest.class
-RezensionTest.class
 BuchTest.class
+RezensionTest.class
+AehnlicheBuecherBeispiel_Standalone.class
+AehnlicheBuecherBeispiel_Standalone$StorageService.class
