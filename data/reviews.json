@@ -1,6 +1,11 @@
 [ {
   "bookId" : "2767052-the-hunger-games",
+  "datum" : 1749072155224,
   "bewertung" : 4,
-  "kommentar" : "Sehr good",
-  "datum" : 1749072155224
+  "kommentar" : "Very Good"
+}, {
+  "bookId" : "2767052-the-hunger-games",
+  "datum" : 1749127578850,
+  "bewertung" : 3,
+  "kommentar" : "Very Good"
 } ]
