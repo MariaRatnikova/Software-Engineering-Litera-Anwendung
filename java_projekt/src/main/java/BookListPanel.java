@@ -93,7 +93,7 @@ public final class BookListPanel extends JPanel {
         topBar.setPreferredSize(TOP_SIZE);
         topBar.setBackground(COLOR_BG_TOP);
 /* Logo ------------------------------------------------------- */
-        ImageIcon logoRaw = new ImageIcon("src/main/java/images/LogoText.png");
+        ImageIcon logoRaw = new ImageIcon(getClass().getClassLoader().getResource("images/LogoText.png"));
         Image     logoImg = logoRaw.getImage()
                                    .getScaledInstance(110, 120, Image.SCALE_SMOOTH);
         topBar.add(new JLabel(new ImageIcon(logoImg)));

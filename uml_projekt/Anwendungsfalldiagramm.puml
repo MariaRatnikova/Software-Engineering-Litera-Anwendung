@@ -12,12 +12,13 @@ rectangle "Litera Bücherkatalog-Anwendung" {
   usecase "Buchdetails anzeigen" as U5
   usecase "Rezension anzeigen" as U6
   usecase "Rezension schreiben" as U7
+  usecase "Ähnliche Bücher anzeigen" as U9
+  usecase "About anzeigen" as U8
 }
 
-
-Kunde --> U4
 Kunde --> U3
-
+Kunde --> U4
+Kunde --> U8
 
 U3 --> U1 : <<include>>
 U3 --> U2 : <<include>>
@@ -26,4 +27,5 @@ U5 .u.> U4 : <<extend>>
 U6 .u.> U4 : <<extend>>
 U7 .u.> U4 : <<extend>>
 
+U9 .u.> U5 : <<extend>>
 @enduml

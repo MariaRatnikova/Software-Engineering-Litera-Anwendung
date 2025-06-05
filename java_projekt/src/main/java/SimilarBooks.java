@@ -120,7 +120,7 @@ public final class SimilarBooks extends JPanel {
     private JPanel createTile(Buch b) {
 
         /* cover ----------------------------------------------------- */
-        ImageIcon raw = new ImageIcon(b.getImage());
+        ImageIcon raw = new ImageIcon(getClass().getClassLoader().getResource(b.getImage()));
         Image scaled  = raw.getImage()
                            .getScaledInstance(120, 180, Image.SCALE_SMOOTH);
         JLabel cover  = new JLabel(new ImageIcon(scaled));

@@ -1,94 +1,119 @@
 /*
  * StorageService.java
  * ------------------------------------------------------------------
- * Loads and saves book and review data in JSON format.
- * Uses Jackson (ObjectMapper) to (de)serialize Java objects.
+ * Loads book data from a JSON file bundled in the JAR (resources) and
+ * stores user reviews in an external JSON file next to the application.
+ *
+ * Book list  : src/main/resources/data/books_short.json → read-only
+ * Reviews    : ./data/reviews.json                     → read/write
+ *
+ * Jackson (ObjectMapper) is used for (de)serialisation.
  */
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Service class for file operations: <br>
- * • loads books and reviews from JSON files<br>
- * • persistently saves new reviews
- */
 public final class StorageService {
 
     /* ------------------------------------------------------------------
-     * File paths
+     * Constants & Paths
      * ---------------------------------------------------------------- */
-    private static final String BOOKS_FILE   = "src/main/java/books_short.json";
-    private static final String REVIEWS_FILE = "src/main/java/reviews.json";
+    private static final String BOOKS_RESOURCE = "data/books_short.json";
+/** Directory where the running JAR (or classes) reside */
+    private static final Path APP_DIR = resolveAppDirectory();
 
+/** External data folder next to the executable */
+    private static final Path DATA_DIR = APP_DIR.resolve("data");
+    private static final Path REVIEWS_PATH = DATA_DIR.resolve("reviews.json");
     /* ------------------------------------------------------------------
-     * Jackson ObjectMapper (reused instance)
+     * Jackson mapper (reuse one instance)
      * ---------------------------------------------------------------- */
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     /* ------------------------------------------------------------------
      * Public API
      * ---------------------------------------------------------------- */
 
-    /**
-     * Reads the list of all books.
-     *
-     * @return List of {@link Buch} objects (empty if file is missing / error)
-     */
+    /** Reads all books packaged inside the JAR. */
     public List<Buch> ladeBuecher() {
-        File file = new File(BOOKS_FILE);
+        try (InputStream in = getClass()
+                                   .getClassLoader()
+                                   .getResourceAsStream(BOOKS_RESOURCE)) {
 
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try {
-            return objectMapper.readValue(file, new TypeReference<List<Buch>>() {});
+            if (in == null) {
+                System.err.println("⚠️  Resource " + BOOKS_RESOURCE + " not found!");
+                return new ArrayList<>();
+            }
+            return mapper.readValue(in, new TypeReference<List<Buch>>() {});
         } catch (IOException ex) {
             ex.printStackTrace();
             return new ArrayList<>();
         }
     }
 
-    /**
-     * Reads all stored reviews.
-     *
-     * @return List of {@link Rezension} objects (empty if file is missing / error)
-     */
+    /** Reads reviews from the external file (creates empty file if missing). */
     public List<Rezension> ladeRezensionen() {
-        File file = new File(REVIEWS_FILE);
-
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
+        ensureReviewsFileExists();
         try {
-            return objectMapper.readValue(file, new TypeReference<List<Rezension>>() {});
+            return mapper.readValue(REVIEWS_PATH.toFile(),
+                                    new TypeReference<List<Rezension>>() {});
         } catch (IOException ex) {
             ex.printStackTrace();
             return new ArrayList<>();
         }
     }
 
-    /**
-     * Persists a new review.<br>
-     * Existing reviews are loaded, the new one is added,
-     * and then the full list is written back.
-     *
-     * @param review Review to be saved
-     */
+    /** Appends a new review and saves the full list back to disk. */
     public void speichereRezension(final Rezension review) {
-        List<Rezension> allReviews = ladeRezensionen();
-        allReviews.add(review);
-
+        List<Rezension> all = ladeRezensionen();
+        all.add(review);
         try {
-            objectMapper.writerWithDefaultPrettyPrinter()
-                        .writeValue(new File(REVIEWS_FILE), allReviews);
+            mapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValue(REVIEWS_PATH.toFile(), all);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /* ------------------------------------------------------------------
+     * Helpers
+     * ---------------------------------------------------------------- */
+
+    /** Creates ./data/reviews.json with an empty array if it does not exist. */
+    private static Path resolveAppDirectory() {
+    try {
+        Path codeSource = Paths.get(
+            StorageService.class.getProtectionDomain()
+                                .getCodeSource()
+                                .getLocation()
+                                .toURI());
+
+        
+        return Files.isRegularFile(codeSource)
+               ? codeSource.getParent().getParent()    // JAR → target → java_projekt
+               : codeSource.getParent().getParent();   // classes → target → java_projekt
+
+    } catch (Exception e) {
+        return Paths.get(System.getProperty("user.dir"));
+    }
+}
+    private void ensureReviewsFileExists() {
+        try {
+            if (Files.notExists(DATA_DIR)) {
+                Files.createDirectories(DATA_DIR);
+            }
+            if (Files.notExists(REVIEWS_PATH)) {
+                Files.writeString(REVIEWS_PATH, "[]");
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

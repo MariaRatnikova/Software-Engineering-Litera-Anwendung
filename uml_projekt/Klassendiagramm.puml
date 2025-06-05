@@ -1,5 +1,7 @@
 @startuml Klassendiagramm
 skinparam classAttributeIconSize 0
+
+' ==== GUI-Klassen ====
 class ApplicationWindow {
   +main(args: String[]): void
 }
@@ -18,15 +20,30 @@ class StartPanel {
   +initComponents(): void
 }
 
+class SimilarBooks {
+  +SimilarBooks(ctrl: Controller, buch: Buch): void
+  +zeigeÄhnlicheBücher(): void
+}
+
+class AboutPanel {
+  +AboutPanel(): void
+  +zeigeInfos(): void
+}
+
+' ==== Verbindungen ====
 ApplicationWindow --> BookListPanel
 ApplicationWindow --> BookDetails
 ApplicationWindow --> StartPanel
+ApplicationWindow --> AboutPanel
 ApplicationWindow --> Controller : verwendet
+
+StartPanel --> AboutPanel
+BookDetails --> SimilarBooks
 BookListPanel --> Controller : verwendet
 BookDetails --> Controller : verwendet
+SimilarBooks --> Controller
 
-Controller ..|> ApplicationInterface
-
+' ==== Interfaces & Implementierung ====
 interface ApplicationInterface {
   +buchsuche(titel: String): List<Buch>
   +buchdetails(id: int): Buch
@@ -34,64 +51,71 @@ interface ApplicationInterface {
   +reviewHinzufuegen(id: int, r: Rezension): void
 }
 
-class Controller implements ApplicationInterface {
+Controller ..|> ApplicationInterface
+
+class Controller {
   +buchsuche(titel: String): List<Buch>
   +buchdetails(id: int): Buch
   +showRezensionen(buchId: int): List<Rezension>
   +reviewHinzufuegen(id: int, r: Rezension): void
+  +aehnlich(buchId: int): List<Buch>
 }
 
+' ==== Backend / Logik ====
 class Buchkatalog {
   - buecher: List<Buch>
-  + buchsuche(titel: String): List<Buch>
-  + buchDetails(id: int): Buch
-  + reviewHinzufuegen(id: int, r: Rezension): void
-  + showRezensionen(buchId: int): List<Rezension>
+  +buchsuche(titel: String): List<Buch>
+  +buchDetails(id: int): Buch
+  +reviewHinzufuegen(id: int, r: Rezension): void
+  +showRezensionen(buchId: int): List<Rezension>
+  +aehnlich(buchId: int): List<Buch>
 }
 
 class StorageService {
-  + ladeBuecher(): List<Buch>
-  + ladeRezensionen(): List<Rezension>
-  + speichereRezension(r: Rezension): void
+  +ladeBuecher(): List<Buch>
+  +ladeRezensionen(): List<Rezension>
+  +speichereRezension(r: Rezension): void
 }
 
+' ==== Datenklassen ====
 class Buch {
-  - Titel: String
-  - ISBN: String
-  - Erscheinungsjahr: Date
-  - Beschreibung: String
+  -titel: String
+  -isbn: String
+  -erscheinungsjahr: Date
+  -beschreibung: String
+  -cover: String
 }
 
 class Autor {
-  - Name: String
+  -name: String
 }
 
 class Genre {
-  - Name: String
-  - Beschreibung: String
+  -name: String
+  -beschreibung: String
 }
 
-
 class Verlag {
-  - Name: String
+  -name: String
 }
 
 class Rezension {
-  - Bewertung: int
-  - Kommentar: String
-  - Datum: Date
+  -bewertung: int
+  -kommentar: String
+  -datum: Date
 }
 
-' Beziehungen
+' ==== Beziehungen ====
+Controller --> Buchkatalog
+Controller --> StorageService
+Buchkatalog --> Buch
+Buchkatalog --> Rezension
+StorageService --> Buch
+StorageService --> Rezension
+
 Buch "1" -- "1..*" Autor
 Buch "1" -- "1" Genre
 Buch "1" -- "1" Verlag
-Buch "1" -- "0..*" Rezension
+Buch "1" --> "0..*" Rezension
 
-Controller --> Buchkatalog
-Controller --> StorageService
-StorageService --> Buch
-StorageService --> Rezension
-Buchkatalog --> Buch
-Buchkatalog --> Rezension
 @enduml

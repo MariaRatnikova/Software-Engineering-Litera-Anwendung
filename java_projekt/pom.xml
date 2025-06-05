@@ -5,93 +5,89 @@
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>litera.catalog</groupId>
   <artifactId>buchkatalog</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <packaging>jar</packaging>
 
-  <name>Bücherkatalog-Anwendung</name>
-  <description>Litera Book Catalogue: Desktop-Anwendung zur Buchsuche und -bewertung</description>
-  <url>https://www.litera.de</url>
-
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <!-- Kompilierung für Java 11 -->
+    <release>11</release>
+    <!-- Versionen der Bibliotheken -->
+    <jackson.version>2.15.2</jackson.version>
+    <junit.version>5.10.0</junit.version>
+    <proguard.version>7.4.2</proguard.version>
+    <!-- Absoluter Pfad zum jmods-Ordner der JDK 17 (Homebrew) -->
+    <jdk.modules>/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/jmods</jdk.modules>
   </properties>
 
-  <developers>
-    <developer><name>Ranim Khallouf</name></developer>
-    <developer><name>Rama Alshaer</name></developer>
-    <developer><name>Marija Ratnikova</name></developer>
-    <developer><name>Lena Heberlein</name></developer>
-  </developers>
-
   <dependencies>
-    <!-- JSON-Verarbeitung -->
+    <!-- Jackson: nötig für JSON -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.15.2</version>
+      <version>${jackson.version}</version>
     </dependency>
 
-    <!-- JUnit 5 for tests -->
+    <!-- JUnit 5 für Tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>5.10.0</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.10.0</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- 1) Compiler Plugin -->
+
+      <!-- 1. Kompilierung für Java 11 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.11.0</version>
         <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <release>${release}</release>
         </configuration>
       </plugin>
 
-      <!-- 2) Surefire for running tests -->
+      <!-- 2. Tests (mit JUnit 5) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.1.2</version>
         <configuration>
           <useModulePath>false</useModulePath>
         </configuration>
       </plugin>
 
-      <!-- 3) Shade Plugin: erstellt ein Fat-JAR mit allen Abhängigkeiten -->
+      <!-- 3. Shade: Erzeugt ein einzelnes Fat-Jar einschließlich aller Abhängigkeiten (Jackson usw.) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.4.1</version>
         <executions>
           <execution>
+            <id>make-fat</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
             <configuration>
-              <createDependencyReducedPom>true</createDependencyReducedPom>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>all</shadedClassifierName>
+              <!-- Das endgültige Artefakt heißt buchkatalog-2.0.0.jar (ohne classifier) -->
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+
+              <!-- Schreibt Main-Class in das Manifest -->
               <transformers>
-                <!-- Hauptklasse ins Manifest schreiben -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <!-- Ersetze durch den vollqualifizierten Namen deiner Klasse mit main(...) -->
                   <mainClass>ApplicationWindow</mainClass>
                 </transformer>
               </transformers>
@@ -100,58 +96,73 @@
         </executions>
       </plugin>
 
-      <!-- 4) JAR Plugin: definiert Main-Class, falls kein Shade-JAR gewünscht -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>ApplicationWindow</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-
-      <!-- 5) ProGuard Plugin: obfuskiert das generierte Shade-JAR -->
+      <!-- 4. ProGuard: Obfuskiert das Fat-Jar (buchkatalog-2.0.0.jar) → buchkatalog-2.0.0-obf.jar -->
       <plugin>
         <groupId>com.github.wvengen</groupId>
         <artifactId>proguard-maven-plugin</artifactId>
-        <version>2.4.0</version>
+        <version>2.7.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.guardsquare</groupId>
+            <artifactId>proguard-base</artifactId>
+            <version>${proguard.version}</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>obfuscate</id>
-            <phase>package</phase>
+            <!-- Phase verify stellt sicher, dass das Fat-Jar bereits vorhanden ist (nach package) -->
+            <phase>verify</phase>
             <goals>
               <goal>proguard</goal>
             </goals>
+            <configuration>
+              <proguardVersion>${proguard.version}</proguardVersion>
+
+              <!-- Basisverzeichnis (target/ für Eingabe- und Ausgabe-Jar) -->
+              <basedir>${project.build.directory}</basedir>
+
+              <!-- injar: das Fat-Jar, das Shade erzeugt hat, liegt unter target/buchkatalog-2.0.0.jar -->
+              <injar>${project.build.finalName}.jar</injar>
+
+              <!-- outjar: erstellt target/buchkatalog-2.0.0-obf.jar -->
+              <outjar>${project.build.finalName}-obf.jar</outjar>
+
+              <!-- Hängt das obfuskierte Jar an die Artefakte an (wird trotzdem in target/ liegen) -->
+              <attach>true</attach>
+
+              <!-- Standard-Java-Bibliothek (jmods), damit ProGuard alle JDK-Klassen findet -->
+              <libraryjars>
+                <libraryjar>${jdk.modules}</libraryjar>
+              </libraryjars>
+
+              <options>
+                <!-- Punkt des Programmeinstiegs bleibt unverändert -->
+                <option>-keep public class ApplicationWindow { public static void main(java.lang.String[]); }</option>
+                <!-- Alle Jackson-Klassen beibehalten, sonst bricht JSON-Teil -->
+                <option>-keep class com.fasterxml.jackson.** { *; }</option>
+
+                <!-- Metadaten, Annotationen und innere Klassen behalten -->
+                <option>-keepattributes *Annotation*</option>
+                <option>-keepattributes Signature</option>
+                <option>-keepattributes InnerClasses</option>
+                <option>-keepattributes EnclosingMethod</option>
+
+                <!-- Keine Shrinking- oder Optimierungs-Schritte, damit Stack-Map-Frames unter Java 11 intakt bleiben -->
+                <option>-dontshrink</option>
+                <option>-dontoptimize</option>
+                <option>-dontpreverify</option>
+
+                <!-- Ziel-Bytecodeversion: Java 11 -->
+                <option>-target 11</option>
+
+                <!-- Alle Warnungen ignorieren -->
+                <option>-dontwarn</option>
+              </options>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <!-- Nimm das Shade-JAR als Input -->
-          <injars>
-            <injar>${project.build.directory}/${project.build.finalName}-all.jar</injar>
-          </injars>
-          <!-- Schreibe das obfuszierte JAR ins Target-Verzeichnis -->
-          <outjars>
-            <outjar>${project.build.directory}/${project.build.finalName}-all-obf.jar</outjar>
-          </outjars>
-          <!-- Java-Laufzeit-Bibliothek (Java 11+) -->
-          <libraryjars>
-            <libraryjar>${java.home}/lib/jrt-fs.jar</libraryjar>
-          </libraryjars>
-          <options>
-            <!-- Behalte Main-Klasse und Einstiegspunkt -->
-            <option>-keep public class ApplicationWindow { public static void main(java.lang.String[]); }</option>
-            <!-- Keine Warnungen anzeigen -->
-            <option>-dontwarn</option>
-            <!-- Keine Optimierungen (nur Obfuskation) -->
-            <option>-dontoptimize</option>
-            <!-- Erzeuge Mapping-Datei für Debugging -->
-            <option>-printmapping ${project.build.directory}/mapping.txt</option>
-          </options>
-        </configuration>
       </plugin>
 
     </plugins>

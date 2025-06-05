@@ -1,12 +1,23 @@
 @startuml
-' Titel des Diagramms
 title Aktivitätsdiagramm – Gesamtprozess der Bücherkatalog-Anwendung
+
 start
-' Partitionen definieren
+
 partition Benutzer {
   :Anwendung starten;
-  :Buchsuche starten;
-  :Suchbegriff eingeben;
+}
+
+partition Benutzer {
+  :Startbildschirm anzeigen;
+  if (About anzeigen?) then (ja)
+    :About anzeigen;
+    :Zurück zum Startbildschirm;
+    -> [Zurück zur Auswahl] 
+    back to :Startbildschirm anzeigen;
+  else (nein)
+    :Buchsuche starten;
+    :Suchbegriff eingeben;
+  endif
 }
 
 partition System {
@@ -15,6 +26,7 @@ partition System {
     :Trefferliste anzeigen;
   else (nein)
     :Meldung anzeigen: Keine Ergebnisse gefunden;
+    stop
   endif
 }
 
@@ -23,34 +35,38 @@ partition Benutzer {
 }
 
 partition System {
-    :Buchdetails anzeigen;
-}
-
-
-partition System {
-    if (Rezensionen vorhanden?) then (ja)
-      :Rezensionen anzeigen;
-    else (nein)
-      :Meldung anzeigen: Keine Rezensionen vorhanden;
+  :Buchdetails anzeigen;
+  if (Rezensionen vorhanden?) then (ja)
+    :Rezensionen anzeigen;
+  else (nein)
+    :Meldung anzeigen: Keine Rezensionen vorhanden;
   endif
+  :Ähnliche Bücher ermitteln;
+  :Ähnliche Bücher anzeigen;
 }
 
 partition Benutzer {
-  : click auf Write Review;
-  if (Rezension schreiben?) then (ja)
-    :Rezension eingeben;
+  if (Ähnliche Buch wählen?) then (ja)
+    :Buch aus Ähnliche Bücher auswählen;
+    -> [Buchdetails] 
+    back to :Buchdetails anzeigen;
   else (nein)
-    :Zurück zur Trefferliste oder beenden;
+    :Klick auf "Write Review";
+    if (Rezension schreiben?) then (ja)
+      :Rezension eingeben;
+    else (nein)
+      :Zurück zur Trefferliste;
+      detach
+    endif
   endif
 }
 
 partition System {
   if (Bewertung gültig?) then (ja)
-  :Rezension erstellen;
-else (nein)
-  :Fehlermeldung anzeigen;
-endif
-
+    :Rezension speichern;
+  else (nein)
+    :Fehlermeldung anzeigen;
+  endif
 }
 
 partition Benutzer {

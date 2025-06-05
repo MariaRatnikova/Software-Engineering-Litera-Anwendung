@@ -237,7 +237,7 @@ public final class BookDetails extends JPanel {
 
         /* Cover image (scaled). */
         if (b.getImage() != null && !b.getImage().isBlank()) {
-            ImageIcon raw = new ImageIcon(b.getImage());
+            ImageIcon raw = new ImageIcon(getClass().getClassLoader().getResource(b.getImage()));
             Image scaled = raw.getImage().getScaledInstance(
                                160, 240, Image.SCALE_SMOOTH);
             coverLabel.setIcon(new ImageIcon(scaled));

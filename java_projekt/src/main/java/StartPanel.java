@@ -52,7 +52,7 @@ public final class StartPanel extends JPanel {
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
 
         /* --- logo --------------------------------------------------- */
-        ImageIcon rawLogo = new ImageIcon("src/main/java/images/Logo Weiss.png");
+        ImageIcon rawLogo = new ImageIcon(getClass().getClassLoader().getResource("images/Logo Weiss.png"));
         Image     imgLogo = rawLogo.getImage()
                                    .getScaledInstance(226, 161, Image.SCALE_SMOOTH);
         JLabel logoLabel = new JLabel(new ImageIcon(imgLogo));

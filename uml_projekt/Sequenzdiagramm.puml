@@ -12,8 +12,17 @@ participant "Rezensionen" as Rezensionen
 participant "Verlag" as Verlag
 participant "Tag" as Tag
 
-' Titel des Diagramms
-title Buchverwaltungssystem - Sequenzdiagramm für Buchsuche und Detailanzeige
+title Buchverwaltungssystem - Sequenzdiagramm für Buchsuche, Detailanzeige, SimilarBooks und About-Button
+
+' Sequenz 0: About anzeigen
+group About anzeigen
+    Benutzer -> UI: klickt "About"
+    activate UI
+    
+    UI -> UI: öffne AboutPanel
+    UI --> Benutzer: zeige Informationen über Litera
+    deactivate UI
+end
 
 ' Sequenz 1: Buchsuche
 group Buchsuche
@@ -83,6 +92,20 @@ group Buchdetails anzeigen
     
     UI --> Benutzer: Zeige Buchdetails an
     deactivate UI
+
+    ' Neuer Schritt: Ähnliche Bücher laden
+    UI -> Katalog: holeÄhnlicheBuecher(buchId)
+    activate Katalog
+    
+    Katalog -> Buch: filtereNachGemeinsamenGenres(buch, MIN_MATCHING_GENRES)
+    activate Buch
+    Buch --> Katalog: Liste ähnlicher Bücher
+    deactivate Buch
+    
+    Katalog --> UI: gebe Liste ähnlicher Bücher zurück
+    deactivate Katalog
+    
+    UI --> Benutzer: zeige SimilarBooks-Panel mit Thumbnails und Titeln
 end
 
 ' Sequenz 3: Rezension hinzufügen

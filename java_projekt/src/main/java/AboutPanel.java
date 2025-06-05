@@ -99,7 +99,7 @@ public final class AboutPanel extends JPanel {
         bar.add(Box.createHorizontalGlue());
 
         /* --- Litera logo (aspect-ratio aware) --------------------- */
-        ImageIcon rawIcon = new ImageIcon("src/main/java/images/Litera.png");
+        ImageIcon rawIcon = new ImageIcon(getClass().getClassLoader().getResource("images/Litera.png"));
         JLabel logo;
         if (rawIcon.getIconWidth() > 0) {
             final int targetWidth = 160;
